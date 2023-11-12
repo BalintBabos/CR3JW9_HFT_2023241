@@ -10,6 +10,16 @@ namespace CR3JW9_HFT_2023241.Models
 {
     public class Person
     {
+        public Person(int personID, int jobID, string name, int age, DateTime birthDate, DateTime worksSince)
+        {
+            PersonID = personID;
+            JobID = jobID;
+            Name = name;
+            Age = age;
+            BirthDate = birthDate;
+            WorksSince = worksSince;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PersonID { get; set; }

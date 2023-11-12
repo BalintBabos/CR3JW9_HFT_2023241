@@ -10,6 +10,14 @@ namespace CR3JW9_HFT_2023241.Models
 {
     public class Job
     {
+        public Job(int jobID, string jobName, string jobLocation, int salary)
+        {
+            JobID = jobID;
+            JobName = jobName;
+            JobLocation = jobLocation;
+            Salary = salary;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int JobID { get; set; }

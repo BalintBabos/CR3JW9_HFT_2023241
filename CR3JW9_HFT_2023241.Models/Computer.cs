@@ -10,6 +10,17 @@ namespace CR3JW9_HFT_2023241.Models
 {
     public class Computer
     {
+        public Computer(int computerID, int rAMAmount, DateTime dateOfAssembly, string cPUManufacturer, string gPUManufacturer, string cPUModel, string gPUModel)
+        {
+            ComputerID = computerID;
+            RAMAmount = rAMAmount;
+            DateOfAssembly = dateOfAssembly;
+            CPUManufacturer = cPUManufacturer;
+            GPUManufacturer = gPUManufacturer;
+            CPUModel = cPUModel;
+            GPUModel = gPUModel;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ComputerID { get; set; }
