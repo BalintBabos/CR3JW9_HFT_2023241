@@ -31,6 +31,7 @@ namespace CR3JW9_HFT_2023241.Models
         public string CPUModel { get; set; }
         public string GPUModel { get; set; }
 
+
         public override string ToString()
         {
             return $"{ComputerID} {RAMAmount} {DateOfAssembly} {CPUManufacturer} {GPUManufacturer} {CPUModel} {GPUModel}";
