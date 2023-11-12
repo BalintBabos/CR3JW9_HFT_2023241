@@ -24,5 +24,10 @@ namespace CR3JW9_HFT_2023241.Models
         public string JobName { get; set; }
         public string JobLocation { get; set; }
         public int Salary { get; set; }
+
+        public override string ToString()
+        {
+            return $"{JobID} {JobName} {JobLocation} {Salary}";
+        }
     }
 }

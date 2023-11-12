@@ -30,5 +30,10 @@ namespace CR3JW9_HFT_2023241.Models
         public int Age { get; set; }
         public DateTime BirthDate { get; set; }
         public DateTime WorksSince { get; set; }
+
+        public override string ToString()
+        {
+            return $"{PersonID} {JobID} {Name} {Age} {BirthDate} {WorksSince}";
+        }
     }
 }

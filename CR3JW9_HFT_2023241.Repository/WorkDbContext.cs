@@ -54,9 +54,9 @@ namespace CR3JW9_HFT_2023241.Repository
             });
             modelBuilder.Entity<Computer>().HasData(new Computer[]
             {
-                new Computer(1, 16, DateTime.Parse("2022"), "AMD", "Nvidia", "Ryzen 5", "RTX 2060"),
-                new Computer(2, 32, DateTime.Parse("2023"), "Intel", "Nvidia", "i9", "RTX 4080"),
-                new Computer(3, 8, DateTime.Parse("2021"), "Intel", "none", "i3", "none"),
+                new Computer(1, 16, DateTime.Parse("2022.10.25"), "AMD", "Nvidia", "Ryzen 5", "RTX 2060"),
+                new Computer(2, 32, DateTime.Parse("2023.08.10"), "Intel", "Nvidia", "i9", "RTX 4080"),
+                new Computer(3, 8, DateTime.Parse("2021.12.14"), "Intel", "none", "i3", "none"),
             });
         }
     }

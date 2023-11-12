@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CR3JW9_HFT_2023241.Models\CR3JW9_HFT_2023241.Models.csproj" />
+    <ProjectReference Include="..\CR3JW9_HFT_2023241.Repository\CR3JW9_HFT_2023241.Repository.csproj" />
   </ItemGroup>
 
 </Project>
