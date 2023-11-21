@@ -74,27 +74,6 @@ namespace CR3JW9_HFT_2023241.Client
             jobLogic = new JobLogic(jobRepo);
             computerLogic = new ComputerLogic(computerRepo);
 
-            //var workers = ctx.Persons;
-            //var jobs = ctx.Jobs;
-            //var computers = ctx.Computers;
-            //foreach (var item in workers)
-            //{
-            //    Console.WriteLine(item.ToString());
-            //}
-            //Console.WriteLine();
-            //foreach (var item in jobs)
-            //{
-            //    Console.WriteLine(item.ToString());
-            //}
-            //Console.WriteLine();
-            //foreach (var item in computers)
-            //{
-            //    Console.WriteLine(item.ToString());
-            //}
-            //var a = ctx.Persons.ToArray();
-            //var b = ctx.Jobs.ToArray();
-            //var c = ctx.Computers.ToArray();
-
             var jobsSubMenu = new ConsoleMenu(args, level: 1)
                .Add("List", () => List("Job"))
                .Add("Create", () => Create("Job"))
