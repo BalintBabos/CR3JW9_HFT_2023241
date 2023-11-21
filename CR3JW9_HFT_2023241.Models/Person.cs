@@ -20,16 +20,21 @@ namespace CR3JW9_HFT_2023241.Models
             WorksSince = worksSince;
         }
 
+        public Person()
+        {
+
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PersonID { get; set; }
-
-        public int JobID {  get; set; }
-
+        public int JobID { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
         public DateTime BirthDate { get; set; }
         public DateTime WorksSince { get; set; }
+        public virtual ICollection<Computer> Computers { get; set; }
+        public virtual Job Job { get; set; }
 
         public override string ToString()
         {

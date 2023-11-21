@@ -10,9 +10,11 @@ namespace CR3JW9_HFT_2023241.Models
 {
     public class Computer
     {
-        public Computer(int computerID, int rAMAmount, DateTime dateOfAssembly, string cPUManufacturer, string gPUManufacturer, string cPUModel, string gPUModel)
+
+        public Computer(int computerID, int personID, int rAMAmount, DateTime dateOfAssembly, string cPUManufacturer, string gPUManufacturer, string cPUModel, string gPUModel)
         {
             ComputerID = computerID;
+            PersonID = personID;
             RAMAmount = rAMAmount;
             DateOfAssembly = dateOfAssembly;
             CPUManufacturer = cPUManufacturer;
@@ -21,9 +23,15 @@ namespace CR3JW9_HFT_2023241.Models
             GPUModel = gPUModel;
         }
 
+        public Computer()
+        {
+
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ComputerID { get; set; }
+        public int PersonID { get; set; }
         public int RAMAmount { get; set; }
         public DateTime DateOfAssembly { get; set; }
         public string CPUManufacturer { get; set; }
@@ -31,10 +39,11 @@ namespace CR3JW9_HFT_2023241.Models
         public string CPUModel { get; set; }
         public string GPUModel { get; set; }
 
+        public virtual Person Person { get; set; }
 
         public override string ToString()
         {
-            return $"{ComputerID} {RAMAmount} {DateOfAssembly} {CPUManufacturer} {GPUManufacturer} {CPUModel} {GPUModel}";
+            return $"{ComputerID} {PersonID} {RAMAmount} {DateOfAssembly} {CPUManufacturer} {GPUManufacturer} {CPUModel} {GPUModel}";
         }
     }
 }

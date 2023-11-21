@@ -18,12 +18,19 @@ namespace CR3JW9_HFT_2023241.Models
             Salary = salary;
         }
 
+        public Job()
+        {
+
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int JobID { get; set; }
         public string JobName { get; set; }
         public string JobLocation { get; set; }
         public int Salary { get; set; }
+
+        public virtual ICollection<Person> Persons { get; set; }
 
         public override string ToString()
         {
