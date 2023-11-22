@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace CR3JW9_HFT_2023241.Models
@@ -33,7 +34,11 @@ namespace CR3JW9_HFT_2023241.Models
         public int Age { get; set; }
         public DateTime BirthDate { get; set; }
         public DateTime WorksSince { get; set; }
+
+        [JsonIgnore]
         public virtual ICollection<Computer> Computers { get; set; }
+
+        [JsonIgnore]
         public virtual Job Job { get; set; }
 
         public override string ToString()
