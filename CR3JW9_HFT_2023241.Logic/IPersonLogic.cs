@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CR3JW9_HFT_2023241.Logic
 {
-    internal interface IPersonLogic
+    public interface IPersonLogic
     {
         void Create(Person item);
         void Delete(int id);

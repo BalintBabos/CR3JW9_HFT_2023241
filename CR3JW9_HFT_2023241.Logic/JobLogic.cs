@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CR3JW9_HFT_2023241.Logic
 {
-    public class JobLogic
+    public class JobLogic :IJobLogic
     {
         IRepository<Job> repo;
 

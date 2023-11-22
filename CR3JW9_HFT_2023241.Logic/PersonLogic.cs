@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CR3JW9_HFT_2023241.Logic
 {
-    public class PersonLogic
+    public class PersonLogic :IPersonLogic
     {
         IRepository<Person> repo;
 
