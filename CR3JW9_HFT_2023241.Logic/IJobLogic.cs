@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CR3JW9_HFT_2023241.Logic
 {
-    internal interface IJobLogic
+    public interface IJobLogic
     {
         void Create(Job item);
         void Delete(int id);
@@ -19,6 +19,6 @@ namespace CR3JW9_HFT_2023241.Logic
         string? GetYoungestPersonPerJob(int jobID);
 
         double? GetAverageAgePerJob(int jobID);
-        int? GetCountOfPersonsByJobID(int jobID);
+        int? GetNumberOfPeople(int jobID);
     }
 }
