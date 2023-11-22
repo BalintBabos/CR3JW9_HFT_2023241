@@ -1,79 +1,101 @@
-﻿using CR3JW9_HFT_2023241.Repository;
-using CR3JW9_HFT_2023241.Logic;
-using CR3JW9_HFT_2023241.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+﻿using CR3JW9_HFT_2023241.Models;
 using System;
 using System.Linq;
-using CR3JW9_HFT_2023241.Repository.ModelRepositories;
 using ConsoleTools;
+using System.Collections.Generic;
 
 namespace CR3JW9_HFT_2023241.Client
 {
     internal class Program
     {
-        static PersonLogic personLogic;
-        static JobLogic jobLogic;
-        static ComputerLogic computerLogic;
-
+        static RestService rest;
         static void Create(string entity)
         {
-            Console.WriteLine(entity + " create");
-            Console.ReadLine();
+            if (entity == "Person")
+            {
+                Console.Write("Enter Person Name: ");
+                string name = Console.ReadLine();
+                rest.Post(new Person() { Name = name }, "person");
+            }
+            if (entity == "Job")
+            {
+                Console.Write("Enter Job Name: ");
+                string name = Console.ReadLine();
+                rest.Post(new Job() { JobName = name }, "job");
+            }
+            if (entity == "Computer")
+            {
+                Console.Write("Enter Computer ID: ");
+                int id = int.Parse(Console.ReadLine());
+                rest.Post(new Computer() {ComputerID = id }, "computer");
+            }
         }
         static void List(string entity)
         {
             if (entity == "Person")
             {
-                var items = personLogic.ReadAll();
-                Console.WriteLine("Id" + "\t" + "Name");
-                foreach (var item in items)
+                List<Person> people = rest.Get<Person>("person");
+                foreach (var item in people)
                 {
-                    Console.WriteLine(item.PersonID + "\t" + item.Name);
+                    Console.WriteLine(item.PersonID + ": " + item.Name);
                 }
             }
-            else if (entity == "Job")
+            if (entity == "Job")
             {
-                var items = jobLogic.ReadAll();
-                Console.WriteLine("Id" + "\t" + "Name");
-                foreach (var item in items)
+                List<Job> jobs = rest.Get<Job>("job");
+                foreach (var item in jobs)
                 {
-                    Console.WriteLine(item.JobID + "\t" + item.JobName);
+                    Console.WriteLine(item.JobID + ": " + item.JobName);
                 }
             }
-            else if (entity == "Computer")
+            if (entity == "Computer")
             {
-                var items = computerLogic.ReadAll();
-                Console.WriteLine("Id" + "\t" + "Name");
-                foreach (var item in items)
+                List<Computer> computers = rest.Get<Computer>("computer");
+                foreach (var item in computers)
                 {
-                    Console.WriteLine(item.ComputerID + "\t" + item.PersonID);
+                    Console.WriteLine(item.ComputerID + ": " + item.DateOfAssembly);
                 }
             }
-            Console.ReadLine();
         }
         static void Update(string entity)
         {
-            Console.WriteLine(entity + " update");
-            Console.ReadLine();
+            if (entity == "Person")
+            {
+                Console.Write("Enter Person's ID to update: ");
+                int id = int.Parse(Console.ReadLine());
+                Person one = rest.Get<Person>(id, "person");
+                Console.Write($"New name [old: {one.Name}]: ");
+                string name = Console.ReadLine();
+                one.Name = name;
+                rest.Put(one, "person");
+            }
+            if (entity == "Person")
+            {
+                Console.Write("Enter Person's ID to update: ");
+                int id = int.Parse(Console.ReadLine());
+                Person one = rest.Get<Person>(id, "person");
+                Console.Write($"New name [old: {one.Name}]: ");
+                string name = Console.ReadLine();
+                one.Name = name;
+                rest.Put(one, "person");
+            }
         }
         static void Delete(string entity)
         {
-            Console.WriteLine(entity + " delete");
-            Console.ReadLine();
+            if (entity == "Person")
+            {
+                Console.Write("Enter Person's id to delete: ");
+                int id = int.Parse(Console.ReadLine());
+                rest.Delete(id, "person");
+            }
         }
 
         static void Main(string[] args)
         {
-            var ctx = new WorkDbContext();
-
-            var personRepo = new PersonRepository(ctx);
-            var jobRepo = new JobRepository(ctx);
-            var computerRepo = new ComputerRepository(ctx);
-
-            personLogic = new PersonLogic(personRepo);
-            jobLogic = new JobLogic(jobRepo);
-            computerLogic = new ComputerLogic(computerRepo);
-
+            Console.WriteLine("he?");
+            rest = new RestService("http://localhost:59537/");
+            Console.WriteLine("he2?");
+            Console.Read();
             var jobsSubMenu = new ConsoleMenu(args, level: 1)
                .Add("List", () => List("Job"))
                .Add("Create", () => Create("Job"))
