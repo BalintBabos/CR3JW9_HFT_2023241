@@ -39,7 +39,8 @@ namespace CR3JW9_HFT_2023241.Client
                 {
                     Console.WriteLine(item.PersonID + ": " + item.Name);
                 }
-            }
+                Console.ReadLine();
+            }  
             if (entity == "Job")
             {
                 List<Job> jobs = rest.Get<Job>("job");
@@ -47,7 +48,8 @@ namespace CR3JW9_HFT_2023241.Client
                 {
                     Console.WriteLine(item.JobID + ": " + item.JobName);
                 }
-            }
+                Console.ReadLine();
+            }           
             if (entity == "Computer")
             {
                 List<Computer> computers = rest.Get<Computer>("computer");
@@ -55,6 +57,7 @@ namespace CR3JW9_HFT_2023241.Client
                 {
                     Console.WriteLine(item.ComputerID + ": " + item.DateOfAssembly);
                 }
+                Console.ReadLine();
             }
         }
         static void Update(string entity)
@@ -68,16 +71,29 @@ namespace CR3JW9_HFT_2023241.Client
                 string name = Console.ReadLine();
                 one.Name = name;
                 rest.Put(one, "person");
-            }
-            if (entity == "Person")
+                Console.ReadLine();
+            }           
+            if (entity == "Job")
             {
-                Console.Write("Enter Person's ID to update: ");
+                Console.Write("Enter Job's ID to update: ");
                 int id = int.Parse(Console.ReadLine());
-                Person one = rest.Get<Person>(id, "person");
-                Console.Write($"New name [old: {one.Name}]: ");
+                Job one = rest.Get<Job>(id, "job");
+                Console.Write($"New name [old: {one.JobName}]: ");
                 string name = Console.ReadLine();
-                one.Name = name;
-                rest.Put(one, "person");
+                one.JobName = name;
+                rest.Put(one, "job");
+                Console.ReadLine();
+            }
+            if (entity == "Computer")
+            {
+                Console.Write("Enter Computer's ID to update: ");
+                int id = int.Parse(Console.ReadLine());
+                Computer one = rest.Get<Computer>(id, "computer");
+                Console.Write($"New Date of Assembly [old: {one.DateOfAssembly}]: ");
+                DateTime dateOfAssembly = DateTime.Parse(Console.ReadLine());
+                one.DateOfAssembly = dateOfAssembly;
+                rest.Put(one, "computer");
+                Console.ReadLine();
             }
         }
         static void Delete(string entity)
@@ -87,15 +103,27 @@ namespace CR3JW9_HFT_2023241.Client
                 Console.Write("Enter Person's id to delete: ");
                 int id = int.Parse(Console.ReadLine());
                 rest.Delete(id, "person");
+                Console.ReadLine();
+            }
+            if (entity == "Job")
+            {
+                Console.Write("Enter Job's id to delete: ");
+                int id = int.Parse(Console.ReadLine());
+                rest.Delete(id, "job");
+                Console.ReadLine();
+            }
+            if (entity == "Computer")
+            {
+                Console.Write("Enter Computer's id to delete: ");
+                int id = int.Parse(Console.ReadLine());
+                rest.Delete(id, "computer");
+                Console.ReadLine();
             }
         }
 
         static void Main(string[] args)
         {
-            Console.WriteLine("he?");
             rest = new RestService("http://localhost:59537/");
-            Console.WriteLine("he2?");
-            Console.Read();
             var jobsSubMenu = new ConsoleMenu(args, level: 1)
                .Add("List", () => List("Job"))
                .Add("Create", () => Create("Job"))
