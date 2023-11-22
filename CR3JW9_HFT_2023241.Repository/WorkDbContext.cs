@@ -25,9 +25,6 @@ namespace CR3JW9_HFT_2023241.Repository
         {
             if (!builder.IsConfigured)
             {
-                //           string conn = @"Data Source=(LocalDB)\MSSQLLocalDB;
-                //AttachDbFilename=|DataDirectory|\work.mdf;Integrated Security=True;MultipleActiveResultSets=true";
-                //           builder.UseLazyLoadingProxies().UseSqlServer(conn);
                 builder.UseLazyLoadingProxies().UseInMemoryDatabase("workdb");
             }
         }
