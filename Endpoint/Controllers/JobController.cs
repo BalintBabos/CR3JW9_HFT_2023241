@@ -34,7 +34,7 @@ namespace CR3JW9_HFT_2023241.Endpoint.Controllers
         }
 
         [HttpPut]
-        public void Put([FromBody] Job value)
+        public void Update([FromBody] Job value)
         {
             this.logic.Update(value);
         }

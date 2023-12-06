@@ -34,7 +34,7 @@ namespace CR3JW9_HFT_2023241.Endpoint.Controllers
         }
 
         [HttpPut]
-        public void Put([FromBody] Person value)
+        public void Update([FromBody] Person value)
         {
             this.logic.Update(value);
         }
