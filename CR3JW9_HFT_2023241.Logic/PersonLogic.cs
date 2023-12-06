@@ -22,27 +22,42 @@ namespace CR3JW9_HFT_2023241.Logic
 
         public void Create(Person item)
         {
-            this.repo.Create(item);
+            repo.Create(item);
         }
 
         public void Delete(int id)
         {
-            this.repo.Delete(id);
+            var person = repo.Read(id);
+            if (person == null)
+            {
+                throw new ArgumentException();
+            }
+            repo.Delete(id);
         }
 
         public Person Read(int id)
         {
-            return this.repo.Read(id);
+            var person = repo.Read(id);
+            if (person == null)
+            {
+                throw new ArgumentException();
+            }
+            return repo.Read(id);
         }
 
         public IQueryable<Person> ReadAll()
         {
-            return this.repo.ReadAll();
+            return repo.ReadAll();
         }
 
         public void Update(Person item)
         {
-            this.repo.Update(item);
+            var person = item;
+            if (person == null)
+            {
+                throw new ArgumentException();
+            }
+            repo.Update(item);
         }
         // non-cruds
 

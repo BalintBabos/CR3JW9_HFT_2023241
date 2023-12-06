@@ -21,27 +21,37 @@ namespace CR3JW9_HFT_2023241.Logic
 
         public void Create(Job item)
         {
-            this.repo.Create(item);
+            repo.Create(item);
         }
 
         public void Delete(int id)
         {
-            this.repo.Delete(id);
+            var job = repo.Read(id);
+            if (job == null)
+            {
+                throw new ArgumentException();
+            }
+            repo.Delete(id);
         }
 
         public Job Read(int id)
         {
-            return this.repo.Read(id);
+            var job = repo.Read(id);
+            if (job == null)
+            {
+                throw new ArgumentException();
+            }
+            return repo.Read(id);
         }
 
         public IQueryable<Job> ReadAll()
         {
-            return this.repo.ReadAll();
+            return repo.ReadAll();
         }
 
         public void Update(Job item)
         {
-            this.repo.Update(item);
+            repo.Update(item);
         }
 
         // non-cruds

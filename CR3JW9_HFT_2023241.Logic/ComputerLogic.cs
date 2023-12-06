@@ -21,39 +21,54 @@ namespace CR3JW9_HFT_2023241.Logic
 
         public void Create(Computer item)
         {
-            this.repo.Create(item);
+            repo.Create(item);
         }
 
         public void Delete(int id)
         {
-            this.repo.Delete(id);
+            var computer = repo.Read(id);
+            if(computer == null)
+            {
+                throw new ArgumentException();
+            }
+            repo.Delete(id);
         }
 
         public Computer Read(int id)
         {
-            return this.repo.Read(id);
+            var computer = repo.Read(id);
+            if(computer == null)
+            {
+                throw new ArgumentException();
+            }
+            return repo.Read(id);
         }
 
         public IQueryable<Computer> ReadAll()
         {
-            return this.repo.ReadAll();
+            return repo.ReadAll();
         }
 
         public void Update(Computer item)
         {
-            this.repo.Update(item);
+            var computer = item;
+            if(item == null)
+            {
+                throw new ArgumentException();
+            }
+            repo.Update(item);
         }
 
         // non-cruds
         public int? GetNumberOfFastComputers() // has GPU & RAM >16
         {
-            var result = this.repo.ReadAll().Where(c => c.RAMAmount >= 16 && !string.IsNullOrEmpty(c.GPUModel)).Count();
+            var result = repo.ReadAll().Where(c => c.RAMAmount >= 16 && !string.IsNullOrEmpty(c.GPUModel)).Count();
             return result;
         }
 
         public string? GetOwnerOfComputerByComputerID(int computerID)
         {
-            var result = this.repo.ReadAll()
+            var result = repo.ReadAll()
         .Where(c => c.ComputerID == computerID)
         .Select(c => c.Person.Name)
         .FirstOrDefault();
