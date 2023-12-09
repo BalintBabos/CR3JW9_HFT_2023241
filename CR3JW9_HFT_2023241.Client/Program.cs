@@ -27,7 +27,7 @@ namespace CR3JW9_HFT_2023241.Client
             {
                 Console.Write("Enter Computer ID: ");
                 int id = int.Parse(Console.ReadLine());
-                rest.Post(new Computer() {ComputerID = id }, "computer");
+                rest.Post(new Computer() { ComputerID = id }, "computer");
             }
         }
         static void List(string entity)
@@ -40,7 +40,7 @@ namespace CR3JW9_HFT_2023241.Client
                     Console.WriteLine(item.PersonID + ": " + item.Name);
                 }
                 Console.ReadLine();
-            }  
+            }
             if (entity == "Job")
             {
                 List<Job> jobs = rest.Get<Job>("job");
@@ -49,7 +49,7 @@ namespace CR3JW9_HFT_2023241.Client
                     Console.WriteLine(item.JobID + ": " + item.JobName);
                 }
                 Console.ReadLine();
-            }           
+            }
             if (entity == "Computer")
             {
                 List<Computer> computers = rest.Get<Computer>("computer");
@@ -72,7 +72,7 @@ namespace CR3JW9_HFT_2023241.Client
                 one.Name = name;
                 rest.Put(one, "person");
                 Console.ReadLine();
-            }           
+            }
             if (entity == "Job")
             {
                 Console.Write("Enter Job's ID to update: ");
