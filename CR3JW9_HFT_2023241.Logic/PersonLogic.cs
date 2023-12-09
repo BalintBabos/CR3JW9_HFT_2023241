@@ -61,7 +61,7 @@ namespace CR3JW9_HFT_2023241.Logic
         }
         // non-cruds
 
-        public IEnumerable<Computer> GetComputerSpecsByJobID(int jobID)
+        public IEnumerable<Computer> GetCPUModelByJobID(int jobID)
         {      
         var result = this.repo.ReadAll()
         .Where(t => t.JobID == jobID)

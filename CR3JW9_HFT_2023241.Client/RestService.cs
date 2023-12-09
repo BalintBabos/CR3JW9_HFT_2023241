@@ -1,10 +1,8 @@
-﻿using CR3JW9_HFT_2023241.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -144,125 +142,6 @@ namespace CR3JW9_HFT_2023241.Client
             }
 
             response.EnsureSuccessStatusCode();
-        }
-
-        public IEnumerable<Computer> GetComputerSpecsByJobID(int jobID)
-        {
-            string endpoint = $"/Stat/GetComputerSpecsByJobID/{jobID}";
-
-            HttpResponseMessage response = client.GetAsync(endpoint).GetAwaiter().GetResult();
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response.Content.ReadAsAsync<IEnumerable<Computer>?>().GetAwaiter().GetResult();
-            }
-            else
-            {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
-            }
-        }
-
-        public string? GetOldestPersonPerJob(int jobID)
-        {
-            string endpoint = $"/Stat/GetOldestPersonPerJob/{jobID}";
-
-            HttpResponseMessage response = client.GetAsync(endpoint).GetAwaiter().GetResult();
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response.Content.ReadAsAsync<string?>().GetAwaiter().GetResult();
-            }
-            else
-            {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
-            }
-        }
-
-        public string? GetYoungestPersonPerJob(int jobID)
-        {
-            string endpoint = $"/Stat/GetYoungestPersonPerJob/{jobID}";
-
-            HttpResponseMessage response = client.GetAsync(endpoint).GetAwaiter().GetResult();
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response.Content.ReadAsAsync<string?>().GetAwaiter().GetResult();
-            }
-            else
-            {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
-            }
-        }
-
-        public double? GetAverageAgePerJob(int jobID)
-        {
-            string endpoint = $"/Stat/GetAverageAgePerJob/{jobID}";
-
-            HttpResponseMessage response = client.GetAsync(endpoint).GetAwaiter().GetResult();
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response.Content.ReadAsAsync<double?>().GetAwaiter().GetResult();
-            }
-            else
-            {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
-            }
-        }
-
-        public int? GetNumberOfPeople(int jobID)
-        {
-            string endpoint = $"/Stat/GetNumberOfPeople/{jobID}";
-
-            HttpResponseMessage response = client.GetAsync(endpoint).GetAwaiter().GetResult();
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response.Content.ReadAsAsync<int?>().GetAwaiter().GetResult();
-            }
-            else
-            {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
-            }
-        }
-
-        public string? GetOwnerOfComputerByComputerID(int computerID)
-        {
-            string endpoint = $"/Stat/GetOwnerOfComputerByComputerID/{computerID}";
-
-            HttpResponseMessage response = client.GetAsync(endpoint).GetAwaiter().GetResult();
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response.Content.ReadAsAsync<string?>().GetAwaiter().GetResult();
-            }
-            else
-            {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
-            }
-        }
-
-        public int? GetNumberOfFastComputers()
-        {
-            string endpoint = $"/Stat/GetNumberOfFastComputers";
-
-            HttpResponseMessage response = client.GetAsync(endpoint).GetAwaiter().GetResult();
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response.Content.ReadAsAsync<int>().GetAwaiter().GetResult();
-            }
-            else
-            {
-                var error = response.Content.ReadAsAsync<RestExceptionInfo>().GetAwaiter().GetResult();
-                throw new ArgumentException(error.Msg);
-            }
         }
 
     }
