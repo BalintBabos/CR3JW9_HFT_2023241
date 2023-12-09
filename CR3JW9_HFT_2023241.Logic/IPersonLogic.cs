@@ -15,6 +15,6 @@ namespace CR3JW9_HFT_2023241.Logic
         Person Read(int id);
         IQueryable<Person> ReadAll();
         void Update(Person item);
-        IEnumerable<Computer> GetCPUModelByJobID(int jobID);
+        IEnumerable<Computer> GetComputerSpecsByJobID(int jobID);
     }
 }
