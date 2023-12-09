@@ -155,8 +155,8 @@ namespace CR3JW9_HFT_2023241.Test
             Assert.AreEqual(3, numberOfPeople);
         }
 
-        [Test] // GetCPUModelByJobID
-        public void GetCPUModelByJobID()
+        [Test] // GetComputerSpecsByJobID
+        public void GetComputerSpecsByJobID()
         {
             // Arrange
             int jobID = 225;
@@ -196,7 +196,7 @@ namespace CR3JW9_HFT_2023241.Test
         }.AsQueryable());
 
             // Act
-            var cpuModels = personLogic.GetCPUModelByJobID(jobID);
+            var cpuModels = personLogic.GetComputerSpecsByJobID(jobID);
 
             // Assert
 

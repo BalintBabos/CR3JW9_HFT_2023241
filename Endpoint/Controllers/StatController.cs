@@ -21,9 +21,9 @@ namespace CR3JW9_HFT_2023241.Endpoint.Controllers
         }
 
         [HttpGet("{jobID}")]
-        public IEnumerable<Computer> GetCPUModelByJobID(int jobID)
+        public IEnumerable<Computer> GetComputerSpecsByJobID(int jobID)
         {
-            return this.personLogic.GetCPUModelByJobID(jobID);
+            return this.personLogic.GetComputerSpecsByJobID(jobID);
         }
 
         [HttpGet("{jobID}")]
