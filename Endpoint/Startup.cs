@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CR3JW9_HFT_2023241.Repository.ModelRepositories;
+using CR3JW9_HFT_2023241.Endpoint.Services;
 
 namespace CR3JW9_HFT_2023241.Endpoint
 {
@@ -40,7 +41,7 @@ namespace CR3JW9_HFT_2023241.Endpoint
             services.AddTransient<IPersonLogic, PersonLogic>();
             services.AddTransient<IJobLogic, JobLogic>();
             services.AddTransient<IComputerLogic, ComputerLogic>();
-
+            services.AddSignalR();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -75,6 +76,7 @@ namespace CR3JW9_HFT_2023241.Endpoint
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<SignalRHub>("/hub");
             });
         }
     }

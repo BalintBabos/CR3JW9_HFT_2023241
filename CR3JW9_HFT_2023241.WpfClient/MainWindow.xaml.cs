@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CR3JW9_HFT_2023241.WpfClient.WindowModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CR3JW9_HFT_2023241.WpfClient.WindowModels;
 
 namespace CR3JW9_HFT_2023241.WpfClient
 {
@@ -20,9 +22,38 @@ namespace CR3JW9_HFT_2023241.WpfClient
     /// </summary>
     public partial class MainWindow : Window
     {
+       private ComputerWindow computerWindow;
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Computer_Click(object sender, RoutedEventArgs e)
+        {
+            if (computerWindow == null || !computerWindow.IsVisible)
+            {
+                computerWindow = new ComputerWindow();
+                computerWindow.Closed += ComputerWindow_Closed;
+                computerWindow.Show();
+            }
+        }        
+
+        private void ComputerWindow_Closed(object sender, EventArgs e)
+        {
+            if (computerWindow != null)
+            {
+                computerWindow.Closed -= ComputerWindow_Closed;
+                computerWindow = null;
+            }
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Biztosan be szeretnéd zárni az alkalmazást?", "Megerősítés", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 }

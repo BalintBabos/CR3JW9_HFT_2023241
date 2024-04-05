@@ -7,6 +7,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Computer Window" FontSize="20" Padding="10" Click="Computer_Click" Margin="0,0,0,0" Background="SkyBlue" FontWeight="Bold"/>
+        <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Job Window" FontSize="20" Padding="10" Click="Computer_Click" Margin="0,0,0,0" Background="Lavender" FontWeight="Bold"/>
+        <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Person Window" FontSize="20" Padding="10" Click="Computer_Click" Margin="0,0,0,0" Background="MintCream" FontWeight="Bold"/>
+        <Button Grid.ColumnSpan="3"  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Exit" FontSize="20" Padding="10" Click="Exit_Click" Margin="0,0,0,0" Background="PeachPuff" FontWeight="Bold"/>
     </Grid>
 </Window>
