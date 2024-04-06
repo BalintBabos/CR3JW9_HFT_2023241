@@ -22,7 +22,9 @@ namespace CR3JW9_HFT_2023241.WpfClient
     /// </summary>
     public partial class MainWindow : Window
     {
-       private ComputerWindow computerWindow;
+        private ComputerWindow computerWindow;
+        private JobWindow jobWindow;
+        private PersonWindow personWindow;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,7 +38,7 @@ namespace CR3JW9_HFT_2023241.WpfClient
                 computerWindow.Closed += ComputerWindow_Closed;
                 computerWindow.Show();
             }
-        }        
+        }
 
         private void ComputerWindow_Closed(object sender, EventArgs e)
         {
@@ -44,6 +46,44 @@ namespace CR3JW9_HFT_2023241.WpfClient
             {
                 computerWindow.Closed -= ComputerWindow_Closed;
                 computerWindow = null;
+            }
+        }
+
+        private void Job_Click(object sender, RoutedEventArgs e)
+        {
+            if (jobWindow == null || !jobWindow.IsVisible)
+            {
+                jobWindow = new JobWindow();
+                jobWindow.Closed += JobWindow_Closed;
+                jobWindow.Show();
+            }
+        }
+
+        private void JobWindow_Closed(object sender, EventArgs e)
+        {
+            if (jobWindow != null)
+            {
+                jobWindow.Closed -= JobWindow_Closed;
+                jobWindow = null;
+            }
+        }
+
+        private void Person_Click(object sender, RoutedEventArgs e)
+        {
+            if (personWindow == null || !personWindow.IsVisible)
+            {
+                personWindow = new PersonWindow();
+                personWindow.Closed += PersonWindow_Closed;
+                personWindow.Show();
+            }
+        }
+
+        private void PersonWindow_Closed(object sender, EventArgs e)
+        {
+            if (personWindow != null)
+            {
+                personWindow.Closed -= PersonWindow_Closed;
+                personWindow = null;
             }
         }
 
