@@ -89,7 +89,7 @@ namespace CR3JW9_HFT_2023241.WpfClient
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Biztosan be szeretnéd zárni az alkalmazást?", "Megerősítés", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Do you really want to exit the application?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
                 Application.Current.Shutdown();
