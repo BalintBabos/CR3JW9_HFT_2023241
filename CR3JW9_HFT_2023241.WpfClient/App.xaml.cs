@@ -21,8 +21,10 @@ namespace CR3JW9_HFT_2023241.WpfClient
             Ioc.Default.ConfigureServices(
                new ServiceCollection()
                    .AddSingleton<IComputerService, ComputerViaWindow>()
+                   .AddSingleton<IJobService, JobViaWindow>()
+                   .AddSingleton<IPersonService, PersonViaWindow>()
                    .BuildServiceProvider()
                    );
-        }      
+        }
     }
 }
