@@ -10,22 +10,16 @@ using System.Windows.Input;
 using System.Windows;
 using CR3JW9_HFT_2023241.Models;
 using System.Security.Cryptography;
+using Newtonsoft.Json.Linq;
 
 namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
 {
     public class JobWindowViewModel : ObservableRecipient
     {
-        private string errorMessage;
-
-        public string ErrorMessage
-        {
-            get { return errorMessage; }
-            set { SetProperty(ref errorMessage, value); }
-        }
+        public bool IsSomethingSelected { get; set; } = false;
         public RestCollection<Job> Jobs { get; set; }
 
         private Job selectedJob;
-
         public Job SelectedJob
         {
             get { return selectedJob; }
@@ -38,13 +32,27 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
                         JobID = value.JobID,
                         JobName = value.JobName,
                         JobLocation = value.JobLocation,
-                        Salary = value.Salary,
+                        Salary = value.Salary
                     };
+
+                    IsSomethingSelected = true;
                     OnPropertyChanged();
-                    (DeleteJobCommand as RelayCommand).NotifyCanExecuteChanged();
                 }
+                else
+                {
+                    selectedJob = new Job();
+                    IsSomethingSelected = false;
+                }
+                (DeleteJobCommand as RelayCommand)?.NotifyCanExecuteChanged();
+                (UpdateJobCommand as RelayCommand)?.NotifyCanExecuteChanged();
             }
         }
+
+        public ICommand CreateJobCommand { get; set; }
+        public ICommand DeleteJobCommand { get; set; }
+        public ICommand UpdateJobCommand { get; set; }
+
+
         public static bool IsInDesignMode
         {
             get
@@ -53,44 +61,132 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
                 return (bool)DependencyPropertyDescriptor.FromProperty(prop, typeof(FrameworkElement)).Metadata.DefaultValue;
             }
         }
-
-
-        public ICommand CreateJobCommand { get; set; }
-        public ICommand DeleteJobCommand { get; set; }
-        public ICommand UpdateJobCommand { get; set; }
-
         public JobWindowViewModel()
+        {
+
+        }
+        public JobWindowViewModel(RestCollection<Job> jobs)
         {
             if (!IsInDesignMode)
             {
-                Jobs = new RestCollection<Job>("http://localhost:59537/", "Job", "hub");
-                CreateJobCommand = new RelayCommand(() =>
-                {
-                    Jobs.Add(new Job()
+                Jobs = jobs;
+
+                CreateJobCommand = new RelayCommand(
+                    () => Jobs.Add(new Job()
                     {
-                        JobName = "null",
-                        Salary = 0
-                    });
-                });
+                        //JobID = SelectedJob.JobID,
+                        JobName = SelectedJob.JobName,
+                        JobLocation = SelectedJob.JobLocation,
+                        Salary = SelectedJob.Salary
+                    }));
 
-                UpdateJobCommand = new RelayCommand(() =>
-                {
+                DeleteJobCommand = new RelayCommand(
+                    () =>
+                    {
+                        Jobs.Delete(SelectedJob.JobID);
+                        IsSomethingSelected = false;
+                    },
+                    () => IsSomethingSelected == true
+                    );
 
-                    Jobs.Update(SelectedJob);
-
-
-                });
-
-                DeleteJobCommand = new RelayCommand(() =>
-                {
-                    Jobs.Delete(SelectedJob.JobID);
-                },
-                () =>
-                {
-                    return SelectedJob != null;
-                });
-                SelectedJob = new Job();
+                UpdateJobCommand = new RelayCommand(
+                    () =>
+                    {
+                        Jobs.Update(SelectedJob);
+                    },
+                    () => IsSomethingSelected == true
+                    );
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //private string errorMessage;
+
+        //public string ErrorMessage
+        //{
+        //    get { return errorMessage; }
+        //    set { SetProperty(ref errorMessage, value); }
+        //}
+        //public RestCollection<Job> Jobs { get; set; }
+
+        //private Job selectedJob;
+
+        //public Job SelectedJob
+        //{
+        //    get { return selectedJob; }
+        //    set
+        //    {
+        //        if (value != null)
+        //        {
+        //            selectedJob = new Job()
+        //            {
+        //                JobID = value.JobID,
+        //                JobName = value.JobName,
+        //                JobLocation = value.JobLocation,
+        //                Salary = value.Salary,
+        //            };
+        //            OnPropertyChanged();
+        //            (DeleteJobCommand as RelayCommand).NotifyCanExecuteChanged();
+        //        }
+        //    }
+        //}
+        //public static bool IsInDesignMode
+        //{
+        //    get
+        //    {
+        //        var prop = DesignerProperties.IsInDesignModeProperty;
+        //        return (bool)DependencyPropertyDescriptor.FromProperty(prop, typeof(FrameworkElement)).Metadata.DefaultValue;
+        //    }
+        //}
+
+
+        //public ICommand CreateJobCommand { get; set; }
+        //public ICommand DeleteJobCommand { get; set; }
+        //public ICommand UpdateJobCommand { get; set; }
+
+        //public JobWindowViewModel()
+        //{
+        //    if (!IsInDesignMode)
+        //    {
+        //        Jobs = new RestCollection<Job>("http://localhost:59537/", "Job", "hub");
+        //        CreateJobCommand = new RelayCommand(() =>
+        //        {
+        //            Jobs.Add(new Job()
+        //            {
+        //                JobName = "null",
+        //                Salary = 0
+        //            });
+        //        });
+
+        //        UpdateJobCommand = new RelayCommand(() =>
+        //        {
+
+        //            Jobs.Update(SelectedJob);
+
+
+        //        });
+
+        //        DeleteJobCommand = new RelayCommand(() =>
+        //        {
+        //            Jobs.Delete(SelectedJob.JobID);
+        //        },
+        //        () =>
+        //        {
+        //            return SelectedJob != null;
+        //        });
+        //        SelectedJob = new Job();
+        //    }
+        //}
     }
 }
