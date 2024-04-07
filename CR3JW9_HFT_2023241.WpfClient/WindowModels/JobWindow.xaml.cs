@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CR3JW9_HFT_2023241.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,8 +20,9 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
     /// </summary>
     public partial class JobWindow : Window
     {
-        public JobWindow()
+        public JobWindow(RestCollection<Job> jobs)
         {
+            DataContext = new JobWindowViewModel(jobs);
             InitializeComponent();
         }
     }
