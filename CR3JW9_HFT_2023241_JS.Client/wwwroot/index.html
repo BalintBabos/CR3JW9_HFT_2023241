@@ -12,8 +12,8 @@
 
         <h3>
             <button onclick="displayComputers()">Computers</button>
-            <!--<button onclick="displayBookings()">Bookings</button>
-        <button onclick="displayPoolTables()">Pooltables</button>-->
+            <button onclick="displayJobs()">Jobs</button>
+            <button onclick="displayPeople()">People</button>
         </h3>
 
         <div class="tablewindow" id="computerwindow">
@@ -30,8 +30,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody id='computers'>
-                    </tbody>
+                    <tbody id='computers'></tbody>
                 </table>
             </div>
 
@@ -86,173 +85,146 @@
             </div>
         </div>
 
-
-        <!--<div class="tablewindow" id="computerwindow">
-        <div class="table">
-            <h2>Computers</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Select</th>
-                        <th>GPUManufacturer</th>
-                        <th>GPUModel</th>
-                    </tr>
-                </thead>
-                <tbody id='computers'>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="editor">
-            <table>
-                <thead>
-                    <tr>
-                        <th><h4>Add computer</h4></th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="gpuManufacturer">GPUManufacturer</label>
-                            <input type="text" id="gpuManufacturer" required>
-                        </td>
-                        <td>
-                            <label for="gpuModel">GPUModel</label>
-                            <input type="text" id="gpuModel" required>
-                        </td>
-                        <td>
-                            <button onclick="addComputer()">Add</button>
-                        </td>
-                    </tr>
-                </thead>
-            </table>
-
-            <div id="updateComputer">
+        <div class="tablewindow" id="jobwindow">
+            <div class="table">
                 <table>
                     <thead>
                         <tr>
-                            <th> <h4>Update computer</h4></th>
+                            <th colspan="5"><h4>Add Job</h4></th>
                         </tr>
                         <tr>
-                            <td>
-                                <label for="gpuManufacturer">GPUManufacturer</label>
-                                <input type="text" id="gpuManufacturerUpdate" required>
-                            </td>
-                            <td>
-                                <label for="gpuModel">GPUModel</label>
-                                <input type="text" id="gpuModelUpdate" required>
-                            </td>
-                            <td>
-                                <button onclick="updateComputer()">Update</button>
-                            </td>
+                            <th>Select</th>
+                            <th>Job Name</th>
+                            <th>Salary</th>
+                            <th></th>
                         </tr>
                     </thead>
+                    <tbody id='jobs'>
+                    </tbody>
                 </table>
             </div>
-        </div>
-    </div>-->
-        <!--<div class="tablewindow" id="bookingwindow">
-        <div class="table">
-            <h2>Bookings</h2>
-            <div id="bokingsHeader">
 
-                <div id="datePicker">
-                    <h4>Date Picker</h4>
-                    <label for="queryStart">Start</label>
-                    <input type="date" id="queryStart" />
-                    <label for="queryEnd">End</label>
-                    <input type="date" id="queryEnd" />
-                    <button onclick="displayBookingsBetweenDates()">Search</button>
+            <div class="editor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="3"><h4>Add Job</h4></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="jobName">Job Name</label>
+                                <input type="text" id="jobName" required>
+                            </td>
+                            <td>
+                                <label for="salary">Salary</label>
+                                <input type="text" id="salary" required>
+                            </td>
+                            <td>
+                                <button onclick="addJob()">Add</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div id="updateJob">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="3"><h4>Update Job</h4></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="jobName">Job Name</label>
+                                    <input type="text" id="jobNameUpdate" required>
+                                </td>
+                                <td>
+                                    <label for="salary">Salary</label>
+                                    <input type="text" id="salaryUpdate" required>
+                                </td>
+                                <td>
+                                    <button onclick="updateJob()">Update</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+        </div>
 
-                <div id="stats">
-                    <h4>Statistics</h4>
+        <div class="tablewindow" id="personwindow">
+            <div class="table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="5"><h4>Add Person</h4></th>
+                        </tr>
+                        <tr>
+                            <th>Select</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id='people'></tbody>
+                </table>
+            </div>
 
-                    <label for="countBookings">Number of bookings:</label>
-                    <input type="text" id="countBookings" readonly>
-                    <label for="mostUsedTable">Most used table:</label>
-                    <input type="text" id="mostUsedTable" readonly>
-                    <label for="tableRates">Table rates:</label>
-                    <input type="text" id="tableRates" readonly>
+            <div class="editor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="3"><h4>Add Person</h4></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="name">Name</label>
+                                <input type="text" id="name" required>
+                            </td>
+                            <td>
+                                <label for="age">Age</label>
+                                <input type="text" id="age" required>
+                            </td>
+                            <td>
+                                <button onclick="addPerson()">Add</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div id="updatePerson">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="3"><h4>Update Person</h4></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="name">Name</label>
+                                    <input type="text" id="nameUpdate" required>
+                                </td>
+                                <td>
+                                    <label for="age">Age</label>
+                                    <input type="text" id="ageUpdate" required>
+                                </td>
+                                <td>
+                                    <button onclick="updatePerson()">Update</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Select</th>
-                        <th>Name</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Table</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="bookings">
-                </tbody>
-            </table>
         </div>
-        <div class="editor">
-            <h4>Add booking</h4>
-            <label for="customer">Customer</label>
-            <select id="customerSelect"> </select>
-            <label for="start">Start</label>
-            <input type="datetime-local" id="start" step="1800" value="2024-01-01T12:00">
-            <label for="end">End</label>
-            <input type="datetime-local" id="end" step="1800" value="2024-01-01T12:00">
-            <label for="table">Table</label>
-            <select id="poolTableSelect"> </select>
-            <button onclick="addBooking()">Add</button>
-
-            <div id="updateBooking">
-                <h4>Update booking</h4>
-                <label for="customer">Customer</label>
-                <select id="customerSelectUpdate"> </select>
-                <label for="start">Start</label>
-                <input type="datetime-local" id="startUpdate" step="1800" value="2024-01-01T12:00">
-                <label for="end">End</label>
-                <input type="datetime-local" id="endUpdate" step="1800" value="2024-01-01T12:00">
-                <label for="table">Table</label>
-                <select id="poolTableSelectUpdate"> </select>
-                <button onclick="UpdateBooking()">Update</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="tablewindow" id="pooltablewindow">
-        <div class="table">
-            <h2>Pool Tables</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Select</th>
-                        <th>Id</th>
-                        <th>Type</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="pooltables">
-                </tbody>
-            </table>
-        </div>
-        <div class="editor">
-            <h4>Add table</h4>
-            <button onclick="addPoolTable()">Add pool table</button>
-            <button onclick="addSnookerTable()">Add snooker table</button>
-
-            <div id="updatePoolTable">
-                <h4>Update table</h4>
-                <label for="type">Type</label>
-                <select id="typeUpdate">
-                    <option value="Pool">Pool</option>
-                    <option value="Snooker">Snooker</option>
-                </select>
-                <button onclick="updatePoolTable()">Update</button>
-            </div>
-        </div>
-    </div>-->
-
 
     </main>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
     <script src="script.js"></script>
 </body>
