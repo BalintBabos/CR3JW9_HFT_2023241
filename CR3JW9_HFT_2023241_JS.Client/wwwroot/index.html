@@ -2,13 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Random AAAA Company</title>
+    <title>Lorem ipsum</title>
     <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
     <main>
-        <h1>Random AAAA Company</h1>
+        <h1>Lorem ipsum</h1>
 
         <h3>
             <button onclick="displayComputers()">Computers</button>
@@ -77,6 +77,28 @@
                                 </td>
                                 <td>
                                     <button onclick="updateComputer()">Update</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="nonCrudsComputer">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="3"><h4>Computer Non-CRUD Methods</h4></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="numberOfFastComputers ">Number of fast computers</label>
+                                    <input type="text" id="numberOfFastComputers" readonly>
+                                </td>
+                                <td>
+                                    <label for="ownerOfComputerByComputerID">Get owner of computer</label>
+                                    <input type="text" id="ownerOfComputerByComputerID" readonly>
                                 </td>
                             </tr>
                         </tbody>
@@ -152,6 +174,39 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div id="nonCrudsJob">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="2"><h4>Job Non-CRUD Methods</h4></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="oldestPersonPerJob">Oldest person per job</label>
+                                    <input type="text" id="oldestPersonPerJob" readonly>
+                                </td>
+                                <td>
+                                    <label for="youngestPersonPerJob">Youngest person per job</label>
+                                    <input type="text" id="youngestPersonPerJob" readonly>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="averageAgePerJob">Average age per job</label>
+                                    <input type="text" id="averageAgePerJob" readonly>
+                                </td>
+                                <td>
+                                    <label for="numberOfPeople">Number of people per job</label>
+                                    <input type="text" id="numberOfPeople" readonly>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -216,6 +271,24 @@
                                 </td>
                                 <td>
                                     <button onclick="updatePerson()">Update</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="nonCrudsPerson">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><h4>Person Non-CRUD Methods</h4></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="computerSpecsByJobID">Computer specifications by JobID</label>
+                                    <input type="text" id="computerSpecsByJobID" readonly>
                                 </td>
                             </tr>
                         </tbody>
