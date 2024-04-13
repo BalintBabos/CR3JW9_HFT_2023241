@@ -27,14 +27,14 @@ namespace CR3JW9_HFT_2023241.Endpoint.Controllers
         }
 
         [HttpGet("{jobID}")]
-        public string? GetOldestPersonPerJob(int jobID)
+        public Person GetOldestPersonPerJob(int jobID)
         {
-            return this.jobLogic.GetOldestPersonPerJob(jobID);
+            return jobLogic.GetOldestPersonPerJob(jobID);
         }
         [HttpGet("{jobID}")]
-        public string? GetYoungestPersonPerJob(int jobID)
+        public Person GetYoungestPersonPerJob(int jobID)
         {
-            return this.jobLogic.GetYoungestPersonPerJob(jobID);
+            return jobLogic.GetYoungestPersonPerJob(jobID);
         }
 
         [HttpGet("{jobID}")]
@@ -56,9 +56,9 @@ namespace CR3JW9_HFT_2023241.Endpoint.Controllers
         }
 
         [HttpGet("{computerID}")]
-        public string? GetOwnerOfComputerByComputerID(int computerID)
+        public Person GetOwnerOfComputerByComputerID(int computerID)
         {
-            return this.computerLogic.GetOwnerOfComputerByComputerID(computerID);
+            return computerLogic.GetOwnerOfComputerByComputerID(computerID);
         }
 
     }
