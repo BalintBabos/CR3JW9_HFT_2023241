@@ -1,35 +1,35 @@
 ﻿let computers = [];
-//let jobs = [];
-//let people = [];
+let jobs = [];
+let people = [];
 
 //non-crud objects
 
 //API
 //#region API
 async function getComputers() {
-    await fetch('http://localhost:59537/Computer')
+    await fetch('http://localhost:59537/Computer/')
         .then(response => response.json())
         .then(data => {
             computers = data;
             console.log("Computers GET done");
         });
 }
-//async function getJobs() {
-//    await fetch('http://localhost:59537/Job')
-//        .then(response => response.json())
-//        .then(data => {
-//            jobs = data;
-//            console.log("Jobs GET done");
-//        });
-//}
-//async function getPeople() {
-//    await fetch('http://localhost:59537/Person')
-//        .then(response => response.json())
-//        .then(data => {
-//            people = data;
-//            console.log("People GET done");
-//        });
-//}
+async function getJobs() {
+    await fetch('http://localhost:59537/Job/')
+        .then(response => response.json())
+        .then(data => {
+            jobs = data;
+            console.log("Jobs GET done");
+        });
+}
+async function getPeople() {
+    await fetch('http://localhost:59537/Person/')
+        .then(response => response.json())
+        .then(data => {
+            people = data;
+            console.log("People GET done");
+        });
+}
 
 // non-crud methods
 
@@ -60,31 +60,31 @@ function setupSignalR() {
             .then(() => displayComputers());
     });
 
-    //connection.on("JobCreated", (user, message) => {
-    //    return getJobs()
-    //        .then(() => displayJobs());
-    //});
-    //connection.on("JobDeleted", (user, message) => {
-    //    return getJobs()
-    //        .then(() => displayJobs());
-    //});
-    //connection.on("JobUpdated", (user, message) => {
-    //    return getJobs()
-    //        .then(() => displayJobs());
-    //});
+    connection.on("JobCreated", (user, message) => {
+        return getJobs()
+            .then(() => displayJobs());
+    });
+    connection.on("JobDeleted", (user, message) => {
+        return getJobs()
+            .then(() => displayJobs());
+    });
+    connection.on("JobUpdated", (user, message) => {
+        return getJobs()
+            .then(() => displayJobs());
+    });
 
-    //connection.on("PeopleCreated", (user, message) => {
-    //    return getPeople()
-    //        .then(() => displayPeople());
-    //});
-    //connection.on("PeopleDeleted", (user, message) => {
-    //    return getPeople()
-    //        .then(() => displayPeople());
-    //});
-    //connection.on("PeopleUpdated", (user, message) => {
-    //    return getPeople()
-    //        .then(() => displayPeople());
-    //});
+    connection.on("PeopleCreated", (user, message) => {
+        return getPeople()
+            .then(() => displayPeople());
+    });
+    connection.on("PeopleDeleted", (user, message) => {
+        return getPeople()
+            .then(() => displayPeople());
+    });
+    connection.on("PeopleUpdated", (user, message) => {
+        return getPeople()
+            .then(() => displayPeople());
+    });
 
     connection.onclose
         (async () => {
@@ -103,17 +103,16 @@ async function start() {
 };
 //#endregion
 
-//Customers
+//Computers
 //#region Computers
 let computerIdUpdate = 0;
 function displayComputers() {
     document.getElementById('computerwindow').style.display = 'flex';
-    //document.getElementById('jobwindow').style.display = 'none';
-    //document.getElementById('personwindow').style.display = 'flex';
-
+    document.getElementById('jobwindow').style.display = 'none';
+    document.getElementById('personwindow').style.display = 'none';
     document.getElementById('updateComputer').style.display = 'none';
-    //document.getElementById('updateJob').style.display = 'none';
-    //document.getElementById('updatePerson').style.display = 'none';
+    document.getElementById('updateJob').style.display = 'none';
+    document.getElementById('updatePerson').style.display = 'none';
 
     return getComputers().then(() => {
 
@@ -131,7 +130,7 @@ function addComputer() {
     let gpuManufacturer = document.getElementById('gpuManufacturer').value;
     let gpuModel = document.getElementById('gpuModel').value;
 
-    fetch('http://localhost:59537/Computer', {
+    fetch('http://localhost:59537/Computer/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -158,7 +157,7 @@ async function removeComputer(id) {
         .then(data => {
             console.log(data);
             return getComputers();
-        }).then(() => displayComputers()) 
+        }).then(() => displayComputers())
         .catch((error) => {
             console.error('Error:', error);
         });
@@ -173,7 +172,7 @@ function updateComputer() {
     let gpuManufacturer = document.getElementById('gpuManufacturerUpdate').value;
     let gpuModel = document.getElementById('gpuModelUpdate').value;
 
-    fetch('http://localhost:59537/Computer', {
+    fetch('http://localhost:59537/Computer/', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -199,299 +198,193 @@ function updateComputer() {
 }
 //#endregion
 
-////Bookings
-////#region Bookings
-//let bookingIdUpdate = 0;
-//async function displayBookings() {
-//    document.getElementById('bookingwindow').style.display = 'flex';
-//    document.getElementById('pooltablewindow').style.display = 'none';
-//    document.getElementById('customerwindow').style.display = 'none';
-//    document.getElementById('updateCustomer').style.display = 'none';
-//    document.getElementById('updateBooking').style.display = 'none';
-//    document.getElementById('updatePoolTable').style.display = 'none';
+//Jobs
+//#region Jobs
+let jobIdUpdate = 0;
+function displayJobs() {
+    document.getElementById('computerwindow').style.display = 'none';
+    document.getElementById('jobwindow').style.display = 'flex';
+    document.getElementById('personwindow').style.display = 'none';
+    document.getElementById('updateComputer').style.display = 'none';
+    document.getElementById('updateJob').style.display = 'none';
+    document.getElementById('updatePerson').style.display = 'none';
 
-//    await Promise.all([getCustomers(), getPoolTables(), getBookings(), getMostUsedTable()]);
+    return getJobs().then(() => {
+        document.getElementById('jobs').innerHTML = "";
+        jobs.forEach(t => {
+            document.getElementById('jobs').innerHTML +=
+                `<tr><td><input type="radio" name="selectJobRadio" onclick='showUpdateJob("${t.jobID}","${t.jobName}","${t.salary}")'></input></td>` +
+                "</td><td>" + t.jobName +
+                "</td><td>" + t.salary +
+                `</td><td><button type="button" onclick='removeJob(${t.jobID})'>Delete</button></td></tr>`;
+        });
+    });
+}
 
-//    document.getElementById('bookings').innerHTML = "";
-//    bookings.forEach(t => {
-//        document.getElementById('bookings').innerHTML +=
-//            `<tr><td><input type="radio" name="selectBookingRadio" onclick='showUpdateBooking("${t.bookingId}","${t.startDate}","${t.endDate}","${t.customer.customerId}","${t.poolTable.tableId}")'></input></td>` +
-//            "</td><td>" + t.customer.name +
-//            "</td><td>" + formatDate(t.startDate) +
-//            "</td><td>" + formatDate(t.endDate) +
-//            "</td><td>" + t.poolTable.t_kind + " - " + t.poolTable.tableId + "" +
-//            `</td><td><button type="button" onclick='removeBooking(${t.bookingId})'>Delete</button></td></tr>`;;
-//    })
+function addJob() {
+    let jobName = document.getElementById('jobName').value;
+    let salary = document.getElementById('salary').value;
 
-//    document.getElementById('customerSelect').innerHTML = "";
-//    document.getElementById('customerSelectUpdate').innerHTML = "";
-//    customers.forEach(c => {
+    fetch('http://localhost:59537/Job/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            jobName: jobName,
+            salary: salary
+        })
+    })
+        .then(data => {
+            console.log(data);
+            displayJobs();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+async function removeJob(id) {
+    await fetch('http://localhost:59537/Job/' + id, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: null
+    })
+        .then(data => {
+            console.log(data);
+            return getJobs();
+        }).then(() => displayJobs())
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+function showUpdateJob(id, jobName, salary) {
+    document.getElementById('updateJob').style.display = 'flex';
+    document.getElementById('jobNameUpdate').value = jobName;
+    document.getElementById('salaryUpdate').value = salary;
+    jobIdUpdate = id;
+}
+function updateJob() {
+    let jobName = document.getElementById('jobNameUpdate').value;
+    let salary = document.getElementById('salaryUpdate').value;
 
-//        document.getElementById('customerSelect').innerHTML +=
-//            "<option value='" + c.customerId + "'>" + c.name + "</option>";
+    fetch('http://localhost:59537/Job/', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            jobID: jobIdUpdate,
+            jobName: jobName,
+            salary: salary
+        })
+    })
+        .then(data => {
+            console.log(data);
+            return getJobs();
+        })
+        .then(() => {
+            displayJobs();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 
-//        document.getElementById('customerSelectUpdate').innerHTML +=
-//            "<option value='" + c.customerId + "'>" + c.name + "</option>";
-//    })
+    document.getElementById('updateJob').style.display = 'none';
+}
+//#endregion
 
-//    document.getElementById('poolTableSelect').innerHTML = "";
-//    document.getElementById('poolTableSelectUpdate').innerHTML = "";
-//    pooltables.forEach(t => {
-//        document.getElementById('poolTableSelect').innerHTML +=
-//            "<option value='" + t.tableId + "'> ID: " + t.tableId + "  Type: " + t.t_kind + "</option>";
-//        document.getElementById('poolTableSelectUpdate').innerHTML +=
-//            "<option value='" + t.tableId + "'> ID: " + t.tableId + "  Type: " + t.t_kind + "</option>";
-//    })
-//    document.getElementById('mostUsedTable').value = mostUsedTable[0].t_kind + ' - ' + mostUsedTable[0].tableId;
-//}
-//async function displayBookingsBetweenDates() {
-//    document.getElementById('bookingwindow').style.display = 'flex';
-//    document.getElementById('pooltablewindow').style.display = 'none';
-//    document.getElementById('customerwindow').style.display = 'none';
-//    document.getElementById('updateCustomer').style.display = 'none';
-//    document.getElementById('updateBooking').style.display = 'none';
-//    document.getElementById('updatePoolTable').style.display = 'none';
+//People
+//#region People
+let peopleIdUpdate = 0;
+function displayPeople() {
+    document.getElementById('computerwindow').style.display = 'none';
+    document.getElementById('jobwindow').style.display = 'none';
+    document.getElementById('personwindow').style.display = 'flex';
+    document.getElementById('updateComputer').style.display = 'none';
+    document.getElementById('updateJob').style.display = 'none';
+    document.getElementById('updatePerson').style.display = 'none';
 
-//    let start = document.getElementById('queryStart').value;
-//    let end = document.getElementById('queryEnd').value;
+    return getPeople().then(() => {
 
-//    await Promise.all([getBookingsBetweenTwoDates(start, end), getPoolTables(), getCustomers(), getHowManyBookingsBetweenTwoDates(start, end)]);
+        document.getElementById('people').innerHTML = "";
+        people.forEach(t => {
+            document.getElementById('people').innerHTML +=
+                `<tr><td><input type="radio" name="selectPersonRadio" onclick='showUpdatePerson("${t.personID}","${t.name}","${t.age}")'></input></td>` +
+                "</td><td>" + t.name +
+                "</td><td>" + t.age +
+                `</td><td><button type="button" onclick='removePerson(${t.personID})'>Delete</button></td></tr>`;;
+        })
+    });
+}
+function addPerson() {
+    let name = document.getElementById('name').value;
+    let age = document.getElementById('age').value;
 
-//    document.getElementById('bookings').innerHTML = "";
-//    bookings.forEach(t => {
-//        document.getElementById('bookings').innerHTML +=
-//            `<tr><td><input type="radio" name="selectBookingRadio" onclick='showUpdateBooking("${t.bookingId}","${t.startDate}","${t.endDate}","${t.customer.customerId}","${t.poolTable.tableId}")'></input></td>` +
-//            "</td><td>" + t.customer.name +
-//            "</td><td>" + formatDate(t.startDate) +
-//            "</td><td>" + formatDate(t.endDate) +
-//            "</td><td>" + t.poolTable.t_kind + " - " + t.poolTable.tableId + "" +
-//            `</td><td><button type="button" onclick='removeBooking(${t.bookingId})'>Delete</button></td></tr>`;;
-//    })
+    fetch('http://localhost:59537/Person/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: name,
+            age: age
+        })
+    })
+        .then(data => {
+            console.log(data);
+            displayPeople();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
 
-//    document.getElementById('customerSelect').innerHTML = "";
-//    document.getElementById('customerSelectUpdate').innerHTML = "";
-//    customers.forEach(c => {
+async function removePerson(id) {
+    await fetch('http://localhost:59537/Person/' + id, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: null
+    })
+        .then(data => {
+            console.log(data);
+            return getPeople();
+        }).then(() => displayPeople())
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+function showUpdatePerson(id, name, age) {
+    document.getElementById('updatePerson').style.display = 'flex';
+    document.getElementById('nameUpdate').value = name;
+    document.getElementById('ageUpdate').value = age;
+    personIdUpdate = id;
+}
+function updatePerson() {
+    let name = document.getElementById('nameUpdate').value;
+    let age = document.getElementById('ageUpdate').value;
 
-//        document.getElementById('customerSelect').innerHTML +=
-//            "<option value='" + c.customerId + "'>" + c.name + "</option>";
+    fetch('http://localhost:59537/Person/', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            personID: personIdUpdate,
+            name: name,
+            age: age
+        })
+    })
+        .then(data => {
+            console.log(data);
+            return getPeople();
+        })
+        .then(() => {
+            displayPeople();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 
-//        document.getElementById('customerSelectUpdate').innerHTML +=
-//            "<option value='" + c.customerId + "'>" + c.name + "</option>";
-//    })
-
-//    document.getElementById('poolTableSelect').innerHTML = "";
-//    document.getElementById('poolTableSelectUpdate').innerHTML = "";
-//    pooltables.forEach(t => {
-//        document.getElementById('poolTableSelect').innerHTML +=
-//            "<option value='" + t.tableId + "'> ID: " + t.tableId + "  Type: " + t.t_kind + "</option>";
-//        document.getElementById('poolTableSelectUpdate').innerHTML +=
-//            "<option value='" + t.tableId + "'> ID: " + t.tableId + "  Type: " + t.t_kind + "</option>";
-//    })
-
-//    document.getElementById('countBookings').value = numberOfBookings;
-//}
-//function addBooking() {
-//    let customer = document.getElementById('customerSelect').value;
-//    let poolTable = document.getElementById('poolTableSelect').value;
-//    let startDate = document.getElementById('start').value;
-//    let endDate = document.getElementById('end').value;
-
-//    fetch('http://localhost:7332/booking', {
-//        method: 'POST',
-//        headers: {
-//            'Content-Type': 'application/json'
-//        },
-//        body: JSON.stringify({
-//            customerId: customer,
-//            tableId: poolTable,
-//            startDate: startDate,
-//            endDate: endDate
-//        })
-//    })
-//        .then(data => {
-//            console.log(data);
-//            displayBookings();
-//        })
-//        .catch((error) => {
-//            console.error('Error:', error);
-//        });
-//}
-//async function removeBooking(id) {
-//    await fetch('http://localhost:7332/booking/' + id, {
-//        method: 'DELETE',
-//        headers: { 'Content-Type': 'application/json' },
-//        body: null
-//    })
-//        .then(data => {
-//            console.log(data);
-//            displayBookings();
-//        })
-//        .catch((error) => {
-//            console.error('Error:', error);
-//        });
-//}
-//function showUpdateBooking(id, start, end, customerId, tableId) {
-//    document.getElementById('updateBooking').style.display = 'flex';
-//    document.getElementById('startUpdate').value = start;
-//    document.getElementById('endUpdate').value = end;
-//    document.getElementById('customerSelectUpdate').value = customerId;
-//    document.getElementById('poolTableSelectUpdate').value = tableId;
-//    bookingIdUpdate = id;
-//}
-//function UpdateBooking() {
-//    let startDate = document.getElementById('startUpdate').value;
-//    let endDate = document.getElementById('endUpdate').value;
-//    let selectedCustomerId = document.getElementById('customerSelectUpdate').value;
-//    let selectedTableId = document.getElementById('poolTableSelectUpdate').value;
-
-//    fetch('http://localhost:7332/booking', {
-//        method: 'PUT',
-//        headers: {
-//            'Content-Type': 'application/json'
-//        },
-//        body: JSON.stringify({
-//            bookingId: bookingIdUpdate,
-//            startDate: startDate,
-//            endDate: endDate,
-//            customerId: selectedCustomerId,
-//            tableId: selectedTableId
-//        })
-//    })
-//        .then(data => {
-//            console.log(data);
-//            displayBookings();
-//        })
-//        .catch((error) => {
-//            console.error('Error:', error);
-//        });
-
-//    document.getElementById('updateBooking').style.display = 'none';
-//}
-//function formatDate(date) {
-//    let d = new Date(date),
-//        month = '' + (d.getMonth() + 1),
-//        day = '' + d.getDate(),
-//        year = d.getFullYear(),
-//        hour = '' + d.getHours(),
-//        minute = '' + d.getMinutes();
-
-//    if (month.length < 2)
-//        month = '0' + month;
-//    if (day.length < 2)
-//        day = '0' + day;
-//    if (hour.length < 2)
-//        hour = '0' + hour;
-//    if (minute.length < 2)
-//        minute = '0' + minute;
-
-//    return [year, month, day].join('.') + ' ' + [hour, minute].join(':');
-//}
-////#endregion
-
-////PoolTables
-////#region PoolTables
-//let poolTableIdUpdate = 0;
-//function displayPoolTables() {
-//    document.getElementById('bookingwindow').style.display = 'none';
-//    document.getElementById('pooltablewindow').style.display = 'flex';
-//    document.getElementById('customerwindow').style.display = 'none';
-//    document.getElementById('updateCustomer').style.display = 'none';
-//    document.getElementById('updateBooking').style.display = 'none';
-//    document.getElementById('updatePoolTable').style.display = 'none';
-
-//    return getPoolTables().then(() => {
-
-//        document.getElementById('pooltables').innerHTML = "";
-//        pooltables.forEach(t => {
-//            document.getElementById('pooltables').innerHTML +=
-//                `<tr><td><input type="radio" name="selectPoolTableRadio" onclick='showUpdatePoolTable("${t.tableId}","${t.t_kind}")'></input></td>` +
-//                "</td><td>" + t.tableId +
-//                "</td><td>" + t.t_kind +
-//                `</td><td><button type="button" onclick='removePoolTable(${t.tableId})'>Delete</button></td></tr>`;;
-//        })
-//    });
-//}
-//function addPoolTable() {
-
-//    fetch('http://localhost:7332/pooltable', {
-//        method: 'POST',
-//        headers: {
-//            'Content-Type': 'application/json'
-//        },
-//        body: JSON.stringify({
-//            t_kind: "Pool"
-//        })
-//    })
-//        .then(data => {
-//            console.log(data);
-//            displayPoolTables();
-//        })
-//        .catch((error) => {
-//            console.error('Error:', error);
-//        });
-//}
-//function addSnookerTable() {
-
-//    fetch('http://localhost:7332/pooltable', {
-//        method: 'POST',
-//        headers: {
-//            'Content-Type': 'application/json'
-//        },
-//        body: JSON.stringify({
-//            t_kind: "Snooker"
-//        })
-//    })
-//        .then(data => {
-//            console.log(data);
-//            displayPoolTables();
-//        })
-//        .catch((error) => {
-//            console.error('Error:', error);
-//        });
-//}
-//async function removePoolTable(id) {
-//    await fetch('http://localhost:7332/pooltable/' + id, {
-//        method: 'DELETE',
-//        headers: { 'Content-Type': 'application/json' },
-//        body: null
-//    })
-//        .then(data => {
-//            console.log(data);
-//            displayPoolTables();
-//        })
-//        .catch((error) => {
-//            console.error('Error:', error);
-//        });
-//}
-//function showUpdatePoolTable(id, type) {
-//    document.getElementById('updatePoolTable').style.display = 'flex';
-//    document.getElementById('typeUpdate').value = type;
-//    poolTableIdUpdate = id;
-//}
-//function updatePoolTable() {
-//    let type = document.getElementById('typeUpdate').value;
-
-//    fetch('http://localhost:7332/pooltable', {
-//        method: 'PUT',
-//        headers: {
-//            'Content-Type': 'application/json'
-//        },
-//        body: JSON.stringify({
-//            tableId: poolTableIdUpdate,
-//            t_kind: type
-//        })
-//    })
-//        .then(data => {
-//            console.log(data);
-//            return getPoolTables();
-//        })
-//        .then(() => {
-//            displayPoolTables();
-//        })
-//        .catch((error) => {
-//            console.error('Error:', error);
-//        });
-
-//    document.getElementById('updatePoolTable').style.display = 'none';
-//}
-////#endregion
+    document.getElementById('updatePerson').style.display = 'none';
+}
+//#endregion
