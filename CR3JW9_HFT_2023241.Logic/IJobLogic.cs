@@ -15,8 +15,8 @@ namespace CR3JW9_HFT_2023241.Logic
         Job Read(int id);
         IQueryable<Job> ReadAll();
         void Update(Job item);
-        string? GetOldestPersonPerJob(int jobID);
-        string? GetYoungestPersonPerJob(int jobID);
+        Person GetOldestPersonPerJob(int jobID);
+        Person GetYoungestPersonPerJob(int jobID);
 
         double? GetAverageAgePerJob(int jobID);
         int? GetNumberOfPeople(int jobID);

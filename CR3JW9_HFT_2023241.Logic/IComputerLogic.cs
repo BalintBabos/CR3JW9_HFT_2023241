@@ -16,6 +16,6 @@ namespace CR3JW9_HFT_2023241.Logic
         IQueryable<Computer> ReadAll();
         void Update(Computer item);
         public int? GetNumberOfFastComputers();
-        public string? GetOwnerOfComputerByComputerID(int computerID);
+        public Person GetOwnerOfComputerByComputerID(int computerID);
     }
 }

@@ -55,19 +55,19 @@ namespace CR3JW9_HFT_2023241.Logic
         }
 
         // non-cruds
-        public string? GetOldestPersonPerJob(int jobID)
+        public Person GetOldestPersonPerJob(int jobID)
         {
             var result1 =
                ReadAll().FirstOrDefault(t => t.JobID == jobID);
             var result2 = result1.Persons.OrderByDescending(t => t.Age).First();
-            return result2.Name;
+            return result2;
         }
-        public string? GetYoungestPersonPerJob(int jobID)
+        public Person GetYoungestPersonPerJob(int jobID)
         {
             var result1 =
                ReadAll().FirstOrDefault(t => t.JobID == jobID);
             var result2 = result1.Persons.OrderBy(t => t.Age).First();
-            return result2.Name;
+            return result2;
         }
 
         public double? GetAverageAgePerJob(int jobID)

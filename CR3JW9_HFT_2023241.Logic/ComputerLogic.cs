@@ -66,11 +66,11 @@ namespace CR3JW9_HFT_2023241.Logic
             return result;
         }
 
-        public string? GetOwnerOfComputerByComputerID(int computerID)
+        public Person GetOwnerOfComputerByComputerID(int computerID)
         {
             var result = repo.ReadAll()
         .Where(c => c.ComputerID == computerID)
-        .Select(c => c.Person.Name)
+        .Select(c => c.Person)
         .FirstOrDefault();
             return result;
         }
