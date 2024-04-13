@@ -2,7 +2,14 @@
 let jobs = [];
 let people = [];
 
-//non-crud objects
+//Non-CRUD objects
+let numberOfFastComputers; // int, Computer
+let ownerOfComputerByComputerID; // string, Computer
+let oldestPersonPerJob; // string, Job
+let youngestPersonPerJob // string, Job
+let averageAgePerJob // double, Job
+let numberOfPeople // int, Job
+let computerSpecsByJobID // IEnumerable<Computer>, Person
 
 //API
 //#region API
@@ -31,7 +38,69 @@ async function getPeople() {
         });
 }
 
-// non-crud methods
+//Non-CRUD methods
+async function GetNumberOfFastComputers() {
+    await fetch('http://localhost:59537/Stat/GetNumberOfFastComputers/')
+        .then(response => response.json())
+        .then(data => {
+            numberOfFastComputers = data;
+            console.log(data);
+        });
+}
+
+async function GetOwnerOfComputerByComputerID(num) {
+    await fetch('http://localhost:59537/Stat/GetOwnerOfComputerByComputerID/' + num)
+        .then(response => response.json())
+        .then(data => {
+            ownerOfComputerByComputerID = data;
+            console.log(data);
+        });
+}
+
+async function GetOldestPersonPerJob(num) {
+    await fetch('http://localhost:59537/Stat/GetOldestPersonPerJob/' + num)
+        .then(response => response.json())
+        .then(data => {
+            oldestPersonPerJob = data;
+            console.log(data);
+        });
+}
+
+async function GetYoungestPersonPerJob(num) {
+    await fetch('http://localhost:59537/Stat/GetYoungestPersonPerJob/' + num)
+        .then(response => response.json())
+        .then(data => {
+            youngestPersonPerJob = data;
+            console.log(data);
+        });
+}
+
+async function GetAverageAgePerJob(num) {
+    await fetch('http://localhost:59537/Stat/GetAverageAgePerJob/' + num)
+        .then(response => response.json())
+        .then(data => {
+            averageAgePerJob = data;
+            console.log(data);
+        });
+}
+
+async function GetNumberOfPeople(num) {
+    await fetch('http://localhost:59537/Stat/GetNumberOfPeople/' + num)
+        .then(response => response.json())
+        .then(data => {
+            numberOfPeople = data;
+            console.log(data);
+        });
+}
+
+async function GetComputerSpecsByJobID(num) {
+    await fetch('http://localhost:59537/Stat/GetComputerSpecsByJobID/' + num)
+        .then(response => response.json())
+        .then(data => {
+            computerSpecsByJobID = data;
+            console.log(data);
+        });
+}
 
 //#endregion
 
@@ -106,7 +175,7 @@ async function start() {
 //Computers
 //#region Computers
 let computerIdUpdate = 0;
-function displayComputers() {
+async function displayComputers() { //async
     document.getElementById('computerwindow').style.display = 'flex';
     document.getElementById('jobwindow').style.display = 'none';
     document.getElementById('personwindow').style.display = 'none';
@@ -114,18 +183,22 @@ function displayComputers() {
     document.getElementById('updateJob').style.display = 'none';
     document.getElementById('updatePerson').style.display = 'none';
 
-    return getComputers().then(() => {
+    await Promise.all([getComputers(), getJobs(), getPeople(), GetNumberOfFastComputers(),
+    GetOwnerOfComputerByComputerID(50)]);
 
-        document.getElementById('computers').innerHTML = "";
-        computers.forEach(t => {
-            document.getElementById('computers').innerHTML +=
-                `<tr><td><input type="radio" name="selectComputerRadio" onclick='showUpdateComputer("${t.computerID}","${t.gpuManufacturer}","${t.gpuModel}")'></input></td>` +
-                "</td><td>" + t.gpuManufacturer +
-                "</td><td>" + t.gpuModel +
-                `</td><td><button type="button" onclick='removeComputer(${t.computerID})'>Delete</button></td></tr>`;
-        })
-    });
+    document.getElementById('computers').innerHTML = "";
+    computers.forEach(t => {
+        document.getElementById('computers').innerHTML +=
+            `<tr><td><input type="radio" name="selectComputerRadio" onclick='showUpdateComputer("${t.computerID}","${t.gpuManufacturer}","${t.gpuModel}")'></input></td>` +
+            "</td><td>" + t.gpuManufacturer +
+            "</td><td>" + t.gpuModel +
+            `</td><td><button type="button" onclick='removeComputer(${t.computerID})'>Delete</button></td></tr>`;
+    })
+
+    document.getElementById('numberOfFastComputers').value = numberOfFastComputers;
+    document.getElementById('ownerOfComputerByComputerID').value = ownerOfComputerByComputerID.name;
 }
+
 function addComputer() {
     let gpuManufacturer = document.getElementById('gpuManufacturer').value;
     let gpuModel = document.getElementById('gpuModel').value;
@@ -201,7 +274,7 @@ function updateComputer() {
 //Jobs
 //#region Jobs
 let jobIdUpdate = 0;
-function displayJobs() {
+async function displayJobs() {
     document.getElementById('computerwindow').style.display = 'none';
     document.getElementById('jobwindow').style.display = 'flex';
     document.getElementById('personwindow').style.display = 'none';
@@ -209,16 +282,22 @@ function displayJobs() {
     document.getElementById('updateJob').style.display = 'none';
     document.getElementById('updatePerson').style.display = 'none';
 
-    return getJobs().then(() => {
-        document.getElementById('jobs').innerHTML = "";
-        jobs.forEach(t => {
-            document.getElementById('jobs').innerHTML +=
-                `<tr><td><input type="radio" name="selectJobRadio" onclick='showUpdateJob("${t.jobID}","${t.jobName}","${t.salary}")'></input></td>` +
-                "</td><td>" + t.jobName +
-                "</td><td>" + t.salary +
-                `</td><td><button type="button" onclick='removeJob(${t.jobID})'>Delete</button></td></tr>`;
-        });
+    await Promise.all([getComputers(), getJobs(), getPeople(), GetOldestPersonPerJob(120),
+    GetYoungestPersonPerJob(120), GetAverageAgePerJob(120), GetNumberOfPeople(120)]);
+
+    document.getElementById('jobs').innerHTML = "";
+    jobs.forEach(t => {
+        document.getElementById('jobs').innerHTML +=
+            `<tr><td><input type="radio" name="selectJobRadio" onclick='showUpdateJob("${t.jobID}","${t.jobName}","${t.salary}")'></input></td>` +
+            "</td><td>" + t.jobName +
+            "</td><td>" + t.salary +
+            `</td><td><button type="button" onclick='removeJob(${t.jobID})'>Delete</button></td></tr>`;
     });
+
+    document.getElementById('oldestPersonPerJob').value = oldestPersonPerJob.name;
+    document.getElementById('youngestPersonPerJob').value = youngestPersonPerJob.name;
+    document.getElementById('averageAgePerJob').value = averageAgePerJob;
+    document.getElementById('numberOfPeople').value = numberOfPeople;
 }
 
 function addJob() {
@@ -296,7 +375,7 @@ function updateJob() {
 //People
 //#region People
 let peopleIdUpdate = 0;
-function displayPeople() {
+async function displayPeople() {
     document.getElementById('computerwindow').style.display = 'none';
     document.getElementById('jobwindow').style.display = 'none';
     document.getElementById('personwindow').style.display = 'flex';
@@ -304,17 +383,22 @@ function displayPeople() {
     document.getElementById('updateJob').style.display = 'none';
     document.getElementById('updatePerson').style.display = 'none';
 
-    return getPeople().then(() => {
+    await Promise.all([getComputers(), getJobs(), getPeople(), GetComputerSpecsByJobID(100)]);
 
-        document.getElementById('people').innerHTML = "";
-        people.forEach(t => {
-            document.getElementById('people').innerHTML +=
-                `<tr><td><input type="radio" name="selectPersonRadio" onclick='showUpdatePerson("${t.personID}","${t.name}","${t.age}")'></input></td>` +
-                "</td><td>" + t.name +
-                "</td><td>" + t.age +
-                `</td><td><button type="button" onclick='removePerson(${t.personID})'>Delete</button></td></tr>`;;
-        })
-    });
+    document.getElementById('people').innerHTML = "";
+    people.forEach(t => {
+        document.getElementById('people').innerHTML +=
+            `<tr><td><input type="radio" name="selectPersonRadio" onclick='showUpdatePerson("${t.personID}","${t.name}","${t.age}")'></input></td>` +
+            "</td><td>" + t.name +
+            "</td><td>" + t.age +
+            `</td><td><button type="button" onclick='removePerson(${t.personID})'>Delete</button></td></tr>`;;
+    })
+
+    let specs = "";
+    for (var i = 0; i < computerSpecsByJobID.length; i++) {
+        specs += computerSpecsByJobID[i].cpuModel + " & " + computerSpecsByJobID[i].gpuModel + " | ";
+    }
+    document.getElementById('computerSpecsByJobID').value = specs;
 }
 function addPerson() {
     let name = document.getElementById('name').value;
