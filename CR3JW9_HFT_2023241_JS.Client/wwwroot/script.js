@@ -175,7 +175,7 @@ async function start() {
 //Computers
 //#region Computers
 let computerIdUpdate = 0;
-async function displayComputers() { //async
+async function displayComputers() {
     document.getElementById('computerwindow').style.display = 'flex';
     document.getElementById('jobwindow').style.display = 'none';
     document.getElementById('personwindow').style.display = 'none';
