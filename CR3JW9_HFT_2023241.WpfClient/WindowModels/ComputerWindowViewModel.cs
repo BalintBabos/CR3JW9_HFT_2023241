@@ -1,71 +1,14 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CR3JW9_HFT_2023241.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows;
-using CR3JW9_HFT_2023241.Models;
-using Newtonsoft.Json.Linq;
+using System.Windows.Input;
 
 namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
 {
     public class ComputerWindowViewModel : ObservableRecipient
     {
-
-        //                    ComputerID = value.ComputerID,
-        //                    PersonID = value.PersonID,
-        //                    RAMAmount = value.RAMAmount,
-        //                    DateOfAssembly = value.DateOfAssembly,
-        //                    CPUManufacturer = value.CPUManufacturer,
-        //                    GPUManufacturer = value.GPUManufacturer,
-        //                    CPUModel = value.CPUModel,
-        //                    GPUModel = value.GPUModel
-        //private int computerID; public int ComputerID
-        //{
-        //    get { return computerID; }
-        //    set { SetProperty(ref computerID, value); }
-        //}
-        //private int personID; public int PersonID
-        //{
-        //    get { return personID; }
-        //    set { SetProperty(ref personID, value); }
-        //}
-        //private int ramAmount; public int RAMAmount
-        //{
-        //    get { return ramAmount; }
-        //    set { SetProperty(ref ramAmount, value); }
-        //}
-
-        //private DateTime dateOfAssembly; public DateTime DateOfAssembly
-        //{
-        //    get { return dateOfAssembly; }
-        //    set { SetProperty(ref dateOfAssembly, value); }
-        //}
-        //private string cpuManufacturer; public string CPUManufacturer
-        //{
-        //    get { return cpuManufacturer; }
-        //    set { SetProperty(ref cpuManufacturer, value); }
-        //}
-        //private string gpuManufacturer; public string GPUManufacturer
-        //{
-        //    get { return gpuManufacturer; }
-        //    set { SetProperty(ref gpuManufacturer, value); }
-        //}
-        //private string cpuModel; public string CPUModel
-        //{
-        //    get { return cpuModel; }
-        //    set { SetProperty(ref cpuModel, value); }
-        //}
-        //private string gpuModel; public string GPUModel
-        //{
-        //    get { return gpuModel; }
-        //    set { SetProperty(ref gpuModel, value); }
-        //}
-
         public bool IsSomethingSelected { get; set; } = false;
         public RestCollection<Computer> Computers { get; set; }
 
