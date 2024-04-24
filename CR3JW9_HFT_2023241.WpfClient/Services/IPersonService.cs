@@ -9,6 +9,6 @@ namespace CR3JW9_HFT_2023241.WpfClient.Services
 {
     interface IPersonService
     {
-        public void Open(RestCollection<Person> people);
+        public void Open(RestCollection<Person> people, RestCollection<Job> jobs);
     }
 }

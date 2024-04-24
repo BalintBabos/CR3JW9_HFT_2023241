@@ -74,9 +74,9 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
                     }));
 
                 DeleteJobCommand = new RelayCommand(
-                    () =>
+                    async () =>
                     {
-                        Jobs.Delete(SelectedJob.JobID);
+                        await Jobs.Delete(SelectedJob.JobID);
                         IsSomethingSelected = false;
                     },
                     () => IsSomethingSelected == true

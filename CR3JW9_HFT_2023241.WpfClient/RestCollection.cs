@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -93,7 +93,7 @@ namespace CR3JW9_HFT_2023241
 
         public async Task<T> GetSingleAsync<T>(string endpoint)
         {
-            T item = default(T);
+            T item = default;
             HttpResponseMessage response = await client.GetAsync(endpoint);
             if (response.IsSuccessStatusCode)
             {
@@ -109,7 +109,7 @@ namespace CR3JW9_HFT_2023241
 
         public T GetSingle<T>(string endpoint)
         {
-            T item = default(T);
+            T item = default;
             HttpResponseMessage response = client.GetAsync(endpoint).GetAwaiter().GetResult();
             if (response.IsSuccessStatusCode)
             {
@@ -125,7 +125,7 @@ namespace CR3JW9_HFT_2023241
 
         public async Task<T> GetAsync<T>(int id, string endpoint)
         {
-            T item = default(T);
+            T item = default;
             HttpResponseMessage response = await client.GetAsync(endpoint + "/" + id.ToString());
             if (response.IsSuccessStatusCode)
             {
@@ -141,7 +141,7 @@ namespace CR3JW9_HFT_2023241
 
         public T Get<T>(int id, string endpoint)
         {
-            T item = default(T);
+            T item = default;
             HttpResponseMessage response = client.GetAsync(endpoint + "/" + id.ToString()).GetAwaiter().GetResult();
             if (response.IsSuccessStatusCode)
             {
@@ -274,8 +274,11 @@ namespace CR3JW9_HFT_2023241
         }
 
     }
-
-    public class RestCollection<T> : INotifyCollectionChanged, IEnumerable<T>
+    public abstract class RestCollection
+    {
+        abstract public Task Refresh();
+    }
+    public class RestCollection<T> : RestCollection, INotifyCollectionChanged, IEnumerable<T>
     {
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
@@ -284,53 +287,65 @@ namespace CR3JW9_HFT_2023241
         List<T> items;
         bool hasSignalR;
         Type type = typeof(T);
-        string endpoint;
 
-        public RestCollection(string baseurl, string endpoint, string hub = null)
+        public IList<RestCollection> DependentCollections { get; }
+
+        public RestCollection(string baseurl, string endpoint, string hub = null, IList<RestCollection> dependentCollections = null)
         {
             hasSignalR = hub != null;
-            this.rest = new RestService(baseurl, endpoint);
-            this.endpoint = endpoint;
+            rest = new RestService(baseurl, endpoint);
             if (hub != null)
             {
-                this.notify = new NotifyService(baseurl + hub);
-                var UiDispatcher = Application.Current.Dispatcher;
+                notify = new NotifyService(baseurl + hub);
 
-                this.notify.AddHandler<T>(endpoint + "Created", (T item) =>
+                notify.AddHandler(type.Name + "Created", (T item) =>
                 {
                     items.Add(item);
-                    UiDispatcher.Invoke(() =>
-                    CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset))
-                    );
+                    Init();
                 });
-                this.notify.AddHandler<T>(endpoint + "Deleted", (T item) =>
+
+                notify.AddHandler(type.Name + "Deleted", async (T item) =>
                 {
                     var element = items.FirstOrDefault(t => t.Equals(item));
                     if (element != null)
                     {
                         items.Remove(item);
-                        CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-                    }
-                    else
-                    {
                         Init();
+                        if (DependentCollections != null)
+                        {
+                            foreach (var restcoll in DependentCollections)
+                            {
+                                await restcoll.Refresh();
+                            }
+                        }
                     }
-
                 });
-                this.notify.AddHandler<T>(endpoint + "Updated", (T item) =>
+
+                notify.AddHandler(type.Name + "Updated", async (T item) =>
                 {
                     Init();
+                    if (DependentCollections != null)
+                    {
+                        foreach (var restcoll in DependentCollections)
+                        {
+                            await restcoll.Refresh();
+                        }
+                    }
                 });
 
-                this.notify.Init();
+                notify.Init();
             }
             Init();
+            DependentCollections = dependentCollections;
         }
 
         private async Task Init()
         {
-            items = await rest.GetAsync<T>(endpoint);
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            items = await rest.GetAsync<T>(typeof(T).Name);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            });
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -355,11 +370,11 @@ namespace CR3JW9_HFT_2023241
         {
             if (hasSignalR)
             {
-                this.rest.PostAsync(item, endpoint);
+                rest.PostAsync(item, typeof(T).Name);
             }
             else
             {
-                this.rest.PostAsync(item, endpoint).ContinueWith((t) =>
+                rest.PostAsync(item, typeof(T).Name).ContinueWith((t) =>
                 {
                     Init().ContinueWith(z =>
                     {
@@ -377,11 +392,11 @@ namespace CR3JW9_HFT_2023241
         {
             if (hasSignalR)
             {
-                this.rest.PutAsync(item, endpoint);
+                rest.PutAsync(item, typeof(T).Name);
             }
             else
             {
-                this.rest.PutAsync(item, endpoint).ContinueWith((t) =>
+                rest.PutAsync(item, typeof(T).Name).ContinueWith((t) =>
                 {
                     Init().ContinueWith(z =>
                     {
@@ -394,28 +409,21 @@ namespace CR3JW9_HFT_2023241
             }
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             if (hasSignalR)
             {
-                this.rest.DeleteAsync(id, endpoint);
+                await rest.DeleteAsync(id, typeof(T).Name);
             }
             else
             {
-                this.rest.DeleteAsync(id, endpoint).ContinueWith((t) =>
-                {
-                    Init().ContinueWith(z =>
-                    {
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-                            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-                        });
-                    });
-                });
+                await rest.DeleteAsync(id, typeof(T).Name).ContinueWith(async (t) => await Init());
             }
 
         }
-
-
+        public override async Task Refresh()
+        {
+            await Init();
+        }
     }
 }

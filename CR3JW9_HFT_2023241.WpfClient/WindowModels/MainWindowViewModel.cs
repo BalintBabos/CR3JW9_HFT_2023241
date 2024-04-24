@@ -36,13 +36,14 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
                 return (bool)DependencyPropertyDescriptor.FromProperty(prop, typeof(FrameworkElement)).Metadata.DefaultValue;
             }
         }
+
         public MainWindowViewModel()
         {
             if (!IsInDesignMode)
             {
-                computers = new RestCollection<Computer>("http://localhost:59537/", "Computer", "hub");
                 jobs = new RestCollection<Job>("http://localhost:59537/", "Job", "hub");
-                people = new RestCollection<Person>("http://localhost:59537/", "Person", "hub");
+                people = new RestCollection<Person>("http://localhost:59537/", "Person", "hub", new List<RestCollection>() { jobs });
+                computers = new RestCollection<Computer>("http://localhost:59537/", "Computer", "hub", new List<RestCollection>() { people, jobs });
 
 
                 computerService = Ioc.Default.GetRequiredService<IComputerService>();
@@ -50,7 +51,7 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
                 personService = Ioc.Default.GetRequiredService<IPersonService>();
 
                 GetComputersCommand = new RelayCommand(
-                    () => computerService.Open(computers),
+                    () => computerService.Open(computers, people, jobs),
                     () => true
                     );
                 GetJobsCommand = new RelayCommand(
@@ -58,7 +59,7 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
                     () => true
                     );
                 GetPeopleCommand = new RelayCommand(
-                    () => personService.Open(people),
+                    () => personService.Open(people, jobs),
                     () => true
                     );
             }
