@@ -25,7 +25,10 @@ namespace CR3JW9_HFT_2023241.Repository
         {
             if (!builder.IsConfigured)
             {
-                builder.UseLazyLoadingProxies().UseInMemoryDatabase("workdb");
+                string conn = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Dataset.mdf;Integrated Security=True;MultipleActiveResultSets=True";
+                builder.UseSqlServer(conn).UseLazyLoadingProxies();
+
+                //builder.UseInMemoryDatabase("workdb").UseLazyLoadingProxies();
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
