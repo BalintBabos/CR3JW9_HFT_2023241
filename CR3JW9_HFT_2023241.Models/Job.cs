@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace CR3JW9_HFT_2023241.Models
 {
@@ -31,11 +32,21 @@ namespace CR3JW9_HFT_2023241.Models
         public string JobLocation { get; set; }
         public int Salary { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Person> Persons { get; set; }
 
         public override string ToString()
         {
             return $"{JobID} {JobName} {JobLocation} {Salary}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Job job &&
+                   JobID == job.JobID &&
+                   JobName == job.JobName &&
+                   JobLocation == job.JobLocation &&
+                   Salary == job.Salary;
         }
     }
 }

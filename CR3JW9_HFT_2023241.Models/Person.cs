@@ -45,5 +45,16 @@ namespace CR3JW9_HFT_2023241.Models
         {
             return $"{PersonID} {JobID} {Name} {Age} {BirthDate} {WorksSince}";
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Person person &&
+                   PersonID == person.PersonID &&
+                   JobID == person.JobID &&
+                   Name == person.Name &&
+                   Age == person.Age &&
+                   BirthDate == person.BirthDate &&
+                   WorksSince == person.WorksSince;
+        }
     }
 }
