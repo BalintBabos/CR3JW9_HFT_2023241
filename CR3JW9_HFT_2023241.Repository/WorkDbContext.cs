@@ -1,12 +1,6 @@
 ﻿using CR3JW9_HFT_2023241.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CR3JW9_HFT_2023241.Repository
 {
