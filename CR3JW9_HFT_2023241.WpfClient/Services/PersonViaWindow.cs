@@ -10,9 +10,9 @@ namespace CR3JW9_HFT_2023241.WpfClient.Services
 {
     internal class PersonViaWindow : IPersonService
     {
-        public void Open(RestCollection<Person> people, RestCollection<Job> jobs)
+        public void Open(RestCollection<Person> people, RestCollection<Computer> computers)
         {
-            new PersonWindow(people, jobs).Show();
+            new PersonWindow(people, computers).Show();
         }
     }
 }

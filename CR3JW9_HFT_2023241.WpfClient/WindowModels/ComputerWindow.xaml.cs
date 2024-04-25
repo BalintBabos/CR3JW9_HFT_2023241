@@ -17,9 +17,9 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
     /// </summary>
     public partial class ComputerWindow : Window
     {
-        public ComputerWindow(RestCollection<Computer> computers, RestCollection<Person> people, RestCollection<Job> jobs)
+        public ComputerWindow(RestCollection<Computer> computers)
         {
-            DataContext = new ComputerWindowViewModel(computers, people, jobs);
+            DataContext = new ComputerWindowViewModel(computers);
             InitializeComponent();
         }
     }

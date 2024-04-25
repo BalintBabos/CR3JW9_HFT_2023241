@@ -10,9 +10,9 @@ namespace CR3JW9_HFT_2023241.WpfClient.Services
 {
     internal class JobViaWindow : IJobService
     {
-        public void Open(RestCollection<Job> jobs)
+        public void Open(RestCollection<Job> jobs, RestCollection<Person> people, RestCollection<Computer> computers)
         {
-            new JobWindow(jobs).Show();
+            new JobWindow(jobs, people, computers).Show();
         }
     }
 }

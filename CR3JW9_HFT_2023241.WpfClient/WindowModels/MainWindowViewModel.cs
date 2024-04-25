@@ -20,9 +20,10 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
         IJobService jobService;
         IPersonService personService;
 
-        public RestCollection<Computer> computers { get; set; }
         public RestCollection<Job> jobs { get; set; }
         public RestCollection<Person> people { get; set; }
+        public RestCollection<Computer> computers { get; set; }
+
 
         public ICommand GetComputersCommand { get; set; }
         public ICommand GetJobsCommand { get; set; }
@@ -41,25 +42,25 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
         {
             if (!IsInDesignMode)
             {
-                jobs = new RestCollection<Job>("http://localhost:59537/", "Job", "hub");
-                people = new RestCollection<Person>("http://localhost:59537/", "Person", "hub", new List<RestCollection>() { jobs });
-                computers = new RestCollection<Computer>("http://localhost:59537/", "Computer", "hub", new List<RestCollection>() { people, jobs });
+                computers = new RestCollection<Computer>("http://localhost:59537/", "Computer", "hub");
+                people = new RestCollection<Person>("http://localhost:59537/", "Person", "hub", new List<RestCollection> { computers });
+                jobs = new RestCollection<Job>("http://localhost:59537/", "Job", "hub", new List<RestCollection> { people, computers });
+                
 
-
-                computerService = Ioc.Default.GetRequiredService<IComputerService>();
                 jobService = Ioc.Default.GetRequiredService<IJobService>();
                 personService = Ioc.Default.GetRequiredService<IPersonService>();
+                computerService = Ioc.Default.GetRequiredService<IComputerService>();
 
-                GetComputersCommand = new RelayCommand(
-                    () => computerService.Open(computers, people, jobs),
-                    () => true
-                    );
                 GetJobsCommand = new RelayCommand(
-                    () => jobService.Open(jobs),
+                    () => jobService.Open(jobs, people, computers),
+                    () => true
+                    ); 
+                GetPeopleCommand = new RelayCommand(
+                    () => personService.Open(people, computers),
                     () => true
                     );
-                GetPeopleCommand = new RelayCommand(
-                    () => personService.Open(people, jobs),
+                GetComputersCommand = new RelayCommand(
+                    () => computerService.Open(computers),
                     () => true
                     );
             }

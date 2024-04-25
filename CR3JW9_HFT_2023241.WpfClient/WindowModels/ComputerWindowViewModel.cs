@@ -11,8 +11,6 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
     {
         public bool IsSomethingSelected { get; set; } = false;
         public RestCollection<Computer> Computers { get; set; }
-        public RestCollection<Person> People { get; set; }
-        public RestCollection<Job> Jobs { get; set; }
 
         private Computer selectedComputer;
         public Computer SelectedComputer
@@ -64,13 +62,11 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
         {
 
         }
-        public ComputerWindowViewModel(RestCollection<Computer> computers, RestCollection<Person> people, RestCollection<Job> jobs)
+        public ComputerWindowViewModel(RestCollection<Computer> computers)
         {
             if (!IsInDesignMode)
             {
                 Computers = computers;
-                People = people;
-                Jobs = jobs;
 
                 CreateComputerCommand = new RelayCommand(
                     () => Computers.Add(new Computer()
@@ -89,8 +85,6 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
                     async () =>
                     {
                         await Computers.Delete(SelectedComputer.ComputerID);
-                        await People.Refresh();
-                        await Jobs.Refresh();
                         IsSomethingSelected = false;
                     },
                     () => IsSomethingSelected == true

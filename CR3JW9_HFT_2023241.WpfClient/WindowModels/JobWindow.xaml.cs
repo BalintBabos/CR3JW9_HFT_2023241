@@ -20,9 +20,9 @@ namespace CR3JW9_HFT_2023241.WpfClient.WindowModels
     /// </summary>
     public partial class JobWindow : Window
     {
-        public JobWindow(RestCollection<Job> jobs)
+        public JobWindow(RestCollection<Job> jobs, RestCollection<Person> people, RestCollection<Computer> computers)
         {
-            DataContext = new JobWindowViewModel(jobs);
+            DataContext = new JobWindowViewModel(jobs, people, computers);
             InitializeComponent();
         }
     }

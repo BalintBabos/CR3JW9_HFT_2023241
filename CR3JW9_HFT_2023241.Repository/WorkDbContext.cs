@@ -27,15 +27,23 @@ namespace CR3JW9_HFT_2023241.Repository
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Person>(
-                person => person.HasOne<Job>().WithMany(job => job.Persons).HasForeignKey(person => person.JobID)
-                .OnDelete(DeleteBehavior.Cascade));
             modelBuilder.Entity<Job>(
-                job => job.HasMany(job => job.Persons).WithOne(job => job.Job)
-                .HasForeignKey(job => job.JobID).OnDelete(DeleteBehavior.Cascade));
+                 job => job.HasMany(job => job.Persons)
+                                 .WithOne(job => job.Job)
+                                 .HasForeignKey(job => job.JobID)
+                                 .OnDelete(DeleteBehavior.Cascade));
+
+            modelBuilder.Entity<Person>(
+                person => person.HasOne<Job>()
+                                .WithMany(job => job.Persons)
+                                .HasForeignKey(person => person.JobID)
+                                .OnDelete(DeleteBehavior.Cascade));
+
             modelBuilder.Entity<Computer>(
-                computer => computer.HasOne(computer => computer.Person).WithMany(person => person.Computers).HasForeignKey(computer => computer.PersonID)
-                .OnDelete(DeleteBehavior.Cascade));
+                computer => computer.HasOne(computer => computer.Person)
+                                .WithMany(person => person.Computers)
+                                .HasForeignKey(computer => computer.PersonID)
+                                .OnDelete(DeleteBehavior.Cascade));
 
             modelBuilder.Entity<Person>().HasData(new Person[]
             {

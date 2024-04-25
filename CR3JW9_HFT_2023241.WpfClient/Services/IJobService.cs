@@ -9,6 +9,6 @@ namespace CR3JW9_HFT_2023241.WpfClient.Services
 {
     interface IJobService
     {
-        public void Open(RestCollection<Job> jobs);
+        public void Open(RestCollection<Job> jobs, RestCollection<Person> people, RestCollection<Computer> computers);
     }
 }
