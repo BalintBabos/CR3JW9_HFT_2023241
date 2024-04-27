@@ -396,7 +396,7 @@ async function displayPeople() {
 
     let specs = "";
     for (var i = 0; i < computerSpecsByJobID.length; i++) {
-        specs += computerSpecsByJobID[i].cpuModel + " & " + computerSpecsByJobID[i].gpuModel + '\n';
+        specs += computerSpecsByJobID[i].cpuModel + " & " + computerSpecsByJobID[i].gpuModel + " | ";
     }
     document.getElementById('computerSpecsByJobID').value = specs;
 }
