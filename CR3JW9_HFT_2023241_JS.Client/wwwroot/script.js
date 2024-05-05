@@ -383,7 +383,7 @@ async function displayPeople() {
     document.getElementById('updateJob').style.display = 'none';
     document.getElementById('updatePerson').style.display = 'none';
 
-    await Promise.all([getComputers(), getJobs(), getPeople(), GetComputerSpecsByJobID(100)]);
+    await Promise.all([getComputers(), getJobs(), getPeople(), GetComputerSpecsByJobID(120)]);
 
     document.getElementById('people').innerHTML = "";
     people.forEach(t => {
@@ -394,12 +394,13 @@ async function displayPeople() {
             `</td><td><button type="button" onclick='removePerson(${t.personID})'>Delete</button></td></tr>`;;
     })
 
-    let specs = "";
-    for (var i = 0; i < computerSpecsByJobID.length; i++) {
-        specs += computerSpecsByJobID[i].cpuModel + " & " + computerSpecsByJobID[i].gpuModel + "\n";
-    }
-    document.getElementById('computerSpecsByJobID').value = specs;
+    document.getElementById('computerSpecsByJobIDList').innerHTML = "";
+    computerSpecsByJobID.forEach(c => {
+        document.getElementById('computerSpecsByJobIDList').innerHTML +=
+            "<li>" + c.cpuModel + " " + c.gpuModel + "</li>"
+    })
 }
+
 function addPerson() {
     let name = document.getElementById('name').value;
     let age = document.getElementById('age').value;
